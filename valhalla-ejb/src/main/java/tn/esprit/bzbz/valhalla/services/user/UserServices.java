@@ -1,5 +1,8 @@
 package tn.esprit.bzbz.valhalla.services.user;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -58,5 +61,28 @@ public class UserServices implements UserServicesRemote, UserServicesLocal {
 		userf.setState("Banned");
 		entityManager.merge(userf);
 	}
+	@Override
+	 public List<User> findAllUser() {
+	 	return entityManager.createQuery("SELECT u FROM User u", User.class).getResultList();
+	  	}
+	@Override
+	public void upgradeUser ( Integer id){
+  		User userf = findById(id);
+  		userf.setRole("Moderator");
+ 		
+ 		userf.setPromotionDate(new Date());
+ 		entityManager.merge(userf);
+ 		
+ 		}
+ 	@Override
+ 	public void downgradeModerator ( Integer id){
+		User userf = findById(id);
+ 		userf.setRole("user");
+		userf.setPromotionDate(new Date());
+  		entityManager.merge(userf);
+  		
+  		}
+	
+	
 
 }
