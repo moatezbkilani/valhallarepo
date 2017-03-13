@@ -1,9 +1,12 @@
 package tests;
 
+import java.util.List;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import tn.esprit.bzbz.valhalla.entity.Message;
 import tn.esprit.bzbz.valhalla.entity.User;
 import tn.esprit.bzbz.valhalla.services.privateMessage.PrivateMessageServicesRemote;
 import tn.esprit.bzbz.valhalla.services.user.UserServicesRemote;
@@ -20,8 +23,25 @@ public class PrivateMessageTest {
 
 		User usr1 = usr.findById(1);
 		User usr2 = usr.findById(2);
-		pr.sendPrivateMessage(usr1, usr2, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		User usr3 = usr.findById(3);
 
+		// pr.sendPrivateMessage(usr1, usr2, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		// pr.sendPrivateMessage(usr1, usr2, "BBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+
+		// pr.sendPrivateMessage(usr3, usr1, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		pr.sendPrivateMessage(usr2, usr3, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
+		/*
+		 * Set<User> usersList = pr.findConversations(usr3); for(User u :
+		 * usersList){ System.out.println(u.getId()+" "+u.getEmail()); }
+		 */
+
+		// System.out.println(pr.deleteConversation(usr1, usr2));
+		List<Message> messagesList = pr.findMessages(usr1, usr2);
+		if (messagesList != null)
+			for (Message m : messagesList) {
+				System.out.println(m.getUserOne().getId() + ": " + m.getContent());
+			}
 	}
 
 }

@@ -20,6 +20,30 @@ public class Message implements Serializable {
 	private MessageId messageId;
 	private String content;
 
+	public MessageId getMessageId() {
+		return messageId;
+	}
+
+	public void setMessageId(MessageId messageId) {
+		this.messageId = messageId;
+	}
+
+	public User getUserOne() {
+		return userOne;
+	}
+
+	public void setUserOne(User userOne) {
+		this.userOne = userOne;
+	}
+
+	public User getUserTwo() {
+		return userTwo;
+	}
+
+	public void setUserTwo(User userTwo) {
+		this.userTwo = userTwo;
+	}
+
 	@ManyToOne
 	@JoinColumn(name = "userOneId", referencedColumnName = "id", updatable = false, insertable = false)
 	private User userOne;

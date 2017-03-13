@@ -16,6 +16,7 @@ public class FindUserTest {
 		User user = userServicesRemote.findById(1);
 		user.setLastName("OKAAAAAAAAAY");
 		userServicesRemote.updateUser(user);
+		
 
 	}
 
