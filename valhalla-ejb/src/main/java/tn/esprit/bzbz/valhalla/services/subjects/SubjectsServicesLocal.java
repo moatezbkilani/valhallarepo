@@ -12,4 +12,6 @@ public interface SubjectsServicesLocal {
 	List<ReportSubject> findAllReportedSubjects();
 
 	List<ReportSubject> findReportedSubjectsInSection(Section section);
+
+	Long getNumberSubject();
 }

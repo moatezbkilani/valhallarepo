@@ -21,4 +21,6 @@ public interface UserServicesRemote {
 	void downgradeModerator(Integer id);
 	
 	void upgradeUser ( Integer id);
+
+	Long getNumberUser();
 }

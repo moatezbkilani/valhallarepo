@@ -61,28 +61,34 @@ public class UserServices implements UserServicesRemote, UserServicesLocal {
 		userf.setState("Banned");
 		entityManager.merge(userf);
 	}
+
 	@Override
-	 public List<User> findAllUser() {
-	 	return entityManager.createQuery("SELECT u FROM User u", User.class).getResultList();
-	  	}
+	public List<User> findAllUser() {
+		return entityManager.createQuery("SELECT u FROM User u", User.class).getResultList();
+	}
+
 	@Override
-	public void upgradeUser ( Integer id){
-  		User userf = findById(id);
-  		userf.setRole("Moderator");
- 		
- 		userf.setPromotionDate(new Date());
- 		entityManager.merge(userf);
- 		
- 		}
- 	@Override
- 	public void downgradeModerator ( Integer id){
+	public void upgradeUser(Integer id) {
 		User userf = findById(id);
- 		userf.setRole("user");
+		userf.setRole("Moderator");
+
 		userf.setPromotionDate(new Date());
-  		entityManager.merge(userf);
-  		
-  		}
-	
-	
+		entityManager.merge(userf);
+
+	}
+
+	@Override
+	public void downgradeModerator(Integer id) {
+		User userf = findById(id);
+		userf.setRole("user");
+		userf.setPromotionDate(new Date());
+		entityManager.merge(userf);
+
+	}
+
+	@Override
+	public Long getNumberUser() {
+		return (Long) entityManager.createQuery("select count(c) from User c").getSingleResult();
+	}
 
 }

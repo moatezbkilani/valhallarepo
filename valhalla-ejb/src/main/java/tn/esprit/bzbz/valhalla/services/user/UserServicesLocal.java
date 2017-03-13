@@ -13,4 +13,6 @@ public interface UserServicesLocal {
 	User findById(Integer id);
 
 	public void updateUser(User user);
+
+	Long getNumberUser();
 }

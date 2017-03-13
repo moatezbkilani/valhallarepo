@@ -36,4 +36,9 @@ public class SubjectsServices implements SubjectsServicesRemote, SubjectsService
 				.setParameter("se", section).getResultList();
 	}
 
+	@Override
+	public Long getNumberSubject() {
+		return (Long) entityManager.createQuery("select count(c) from Subject c").getSingleResult();
+	}
+
 }
