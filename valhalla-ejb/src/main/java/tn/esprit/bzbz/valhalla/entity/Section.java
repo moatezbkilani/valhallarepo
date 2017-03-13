@@ -26,6 +26,15 @@ public class Section implements Serializable {
 	private String image;
 	private String state;
 
+	public Section(String sectionName, String description, String image, String state, Service service) {
+		super();
+		this.sectionName = sectionName;
+		this.description = description;
+		this.image = image;
+		this.state = state;
+		this.service = service;
+	}
+
 	public String getState() {
 		return state;
 	}

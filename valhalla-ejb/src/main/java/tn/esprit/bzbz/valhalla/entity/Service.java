@@ -40,6 +40,13 @@ public class Service implements Serializable {
 		super();
 	}
 
+	public Service(String serviceName, String description, String image) {
+		super();
+		this.serviceName = serviceName;
+		this.description = description;
+		this.image = image;
+	}
+
 	public Integer getId() {
 		return this.id;
 	}
