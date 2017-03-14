@@ -18,11 +18,13 @@ public interface CommentsServicesRemote {
 
 	Long getNumberCommentsInDate(Date startDate, Date endDate);
 
-	List<Long> getNumberCommentsFromJanvier();
 
+	List<Long> getNumberCommentsPerMonthFrom3YearsAgor();
 	Comment findCommentById(CommentId commentId);
 	void reportComment(User user, CommentId commentId, CommentReport commentReport);
 	Long numberComments(Service service);
 	void saveOrUpdateComment(String content, User user, Subject subject);
 	Long numberTotalComments();
+
+	List<Long> getNumberCommentsFromJanvier();
 }

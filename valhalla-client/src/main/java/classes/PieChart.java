@@ -1,7 +1,7 @@
 package classes;
 
-
 import java.awt.Font;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -19,7 +19,7 @@ import org.jfree.ui.ApplicationFrame;
  * data from a {@link DefaultPieDataset}.
  */
 public class PieChart extends ApplicationFrame {
-
+	private static String title;
 	/**
 	 * Default constructor.
 	 *
@@ -28,6 +28,7 @@ public class PieChart extends ApplicationFrame {
 	 */
 	public PieChart(String title, List<Results> results) {
 		super(title);
+		this.title=title;
 		setContentPane(createDemoPanel(results));
 	}
 
@@ -38,18 +39,9 @@ public class PieChart extends ApplicationFrame {
 	 */
 	private static PieDataset createDataset(List<Results> results) {
 		DefaultPieDataset dataset = new DefaultPieDataset();
+		DecimalFormat df = new DecimalFormat("########.0");
 		for (Results result : results) {
-			dataset.setValue("" + result.getStat1(), (Double) result
-					.getStat2());/*
-									 * dataset.setValue("Two", new
-									 * Double(10.0)); dataset.setValue("Three",
-									 * new Double(27.5));
-									 * dataset.setValue("Four", new
-									 * Double(17.5)); dataset.setValue("Five",
-									 * new Double(11.0));
-									 * dataset.setValue("Six", new
-									 * Double(19.4));
-									 */
+			dataset.setValue(result.getStat1() + "=" + df.format((result.getStat2() * 100)) + "%", result.getStat2());
 		}
 		return dataset;
 	}
@@ -64,7 +56,7 @@ public class PieChart extends ApplicationFrame {
 	 */
 	private static JFreeChart createChart(PieDataset dataset) {
 
-		JFreeChart chart = ChartFactory.createPieChart("Pie Chart Demo 1", // chart
+		JFreeChart chart = ChartFactory.createPieChart(title, // chart
 																			// title
 				dataset, // data
 				true, // include legend

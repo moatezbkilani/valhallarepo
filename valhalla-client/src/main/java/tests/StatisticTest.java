@@ -63,7 +63,7 @@ public class StatisticTest extends JFrame {
 			result.add(res);
 		}
 		PieChart demo = new PieChart("Pie Chart Demo 1", result);
-		setContentPane(demo.createDemoPanel(result));
+		//setContentPane(demo.createDemoPanel(result));
 
 	}
 

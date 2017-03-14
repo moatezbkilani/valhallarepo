@@ -6,6 +6,7 @@ import javax.ejb.Local;
 
 import tn.esprit.bzbz.valhalla.entity.ReportSubject;
 import tn.esprit.bzbz.valhalla.entity.Section;
+import tn.esprit.bzbz.valhalla.entity.Service;
 import tn.esprit.bzbz.valhalla.entity.Subject;
 
 @Local
@@ -17,6 +18,8 @@ public interface SubjectsServicesLocal {
 	Long getNumberSubject();
 
 	void saveOrUpdateSubject(Subject subject);
-	
+
 	Subject findSubjectById(int i);
+
+	Long numberSubject(Service service);
 }

@@ -10,11 +10,16 @@ import javax.naming.NamingException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import org.jfree.ui.RefineryUtilities;
+
+import classes.AreaChart;
 import classes.PieChart;
+import classes.PieChart3D;
 import classes.Results;
 import tn.esprit.bzbz.valhalla.entity.Service;
 import tn.esprit.bzbz.valhalla.services.comments.CommentsServicesRemote;
 import tn.esprit.bzbz.valhalla.services.service.ServiceServicesRemote;
+import tn.esprit.bzbz.valhalla.services.subjects.SubjectsServicesRemote;
 
 public class GraphicTest extends JFrame {
 
@@ -58,8 +63,44 @@ public class GraphicTest extends JFrame {
 
 			results.add(res);
 		}
-		PieChart demo = new PieChart("Pie Chart Demo 1", results);
+		PieChart demo = new PieChart("Comments per services", results);
 		setContentPane(demo.createDemoPanel(results));
+
+		SubjectsServicesRemote sub = (SubjectsServicesRemote) context.lookup(
+				"valhalla-ear/valhalla-ejb/SubjectsServices!tn.esprit.bzbz.valhalla.services.subjects.SubjectsServicesRemote");
+
+		CommentsServicesRemote sisr = (CommentsServicesRemote) context.lookup(
+				"valhalla-ear/valhalla-ejb/CommentsServices!tn.esprit.bzbz.valhalla.services.comments.CommentsServicesRemote");
+
+		List<Long> l = sisr.getNumberCommentsPerMonthFrom3YearsAgor();
+
+		final AreaChart demo2 = new AreaChart("Comments per months for 3 years ago", l);
+		demo2.pack();
+		RefineryUtilities.centerFrameOnScreen(demo2);
+		demo2.setVisible(true);
+
+		final PieChart3D demox = new PieChart3D("Comments per Services", results);
+		demox.pack();
+		RefineryUtilities.centerFrameOnScreen(demox);
+		demox.setVisible(true);
+
+		List<Results> results1 = new ArrayList<Results>();
+		for (Service ser : ssr.findServices()) {
+			Results res = new Results();
+			res.setStat1(ser.getServiceName());
+			Double r = (sub.numberSubject(ssr.findServiceById(ser.getId())).doubleValue()
+					/ sub.numberTotalSubjects().doubleValue());
+			System.out.println(r);
+			res.setStat2(r);
+
+			results1.add(res);
+			System.out.println(res.getStat2());
+		}
+
+		final PieChart3D dem = new PieChart3D("Subjects per Services", results1);
+		dem.pack();
+		RefineryUtilities.centerFrameOnScreen(dem);
+		dem.setVisible(true);
 	}
 
 }

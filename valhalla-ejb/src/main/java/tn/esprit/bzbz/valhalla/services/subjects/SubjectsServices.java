@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 
 import tn.esprit.bzbz.valhalla.entity.ReportSubject;
 import tn.esprit.bzbz.valhalla.entity.Section;
+import tn.esprit.bzbz.valhalla.entity.Service;
 import tn.esprit.bzbz.valhalla.entity.Subject;
 
 /**
@@ -29,6 +30,18 @@ public class SubjectsServices implements SubjectsServicesRemote, SubjectsService
 	public List<ReportSubject> findAllReportedSubjects() {
 		return entityManager.createQuery("select rs from ReportSubject rs").getResultList();
 
+	}
+	
+	@Override
+	public Long numberTotalSubjects() {
+		return (Long) entityManager.createQuery("select count(u) from Subject u").getSingleResult();
+	}
+	
+	@Override
+	public Long numberSubject(Service service) {
+		return (Long) entityManager
+				.createQuery("select count(u) from Subject u where u.section.service LIKE :a")
+				.setParameter("a", service).getSingleResult();
 	}
 
 	@Override

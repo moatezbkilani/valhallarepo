@@ -1,6 +1,8 @@
 package tn.esprit.bzbz.valhalla.services.comments;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -70,6 +72,8 @@ public class CommentsServices implements CommentsServicesRemote, CommentsService
 				.createQuery("select count(u) from Comment u where u.subject.section.service LIKE :a")
 				.setParameter("a", service).getSingleResult();
 	}
+	
+	
 
 	@Override
 	public Comment findCommentById(CommentId commentId) {
@@ -101,6 +105,51 @@ public class CommentsServices implements CommentsServicesRemote, CommentsService
 
 			listeretour.add(getNumberCommentsInDate(dated, datef));
 			System.out.println(listeretour.get(i));
+		}
+		return listeretour;
+	}
+
+	@Override
+	public List<Long> getNumberCommentsPerMonthFrom3YearsAgor() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		List<Long> listeretour = new ArrayList<Long>();
+		Date date = new Date();
+		date.setDate(1);
+		
+		System.out.println(sdf.format(date));
+		for (int i = 0; i <= 36; i++) {
+			
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
+			cal.add(Calendar.MONTH, -36);
+
+			Calendar cal1 = Calendar.getInstance();
+			cal1.setTime(date);
+			cal1.add(Calendar.MONTH, -36);
+
+			Date datef = new Date();
+			cal1.add(Calendar.MONTH, (i + 1));
+			cal1.add(Calendar.DATE, -1);
+			datef = cal1.getTime();
+			// datef.setDate(1);
+			datef.setHours(0);
+			datef.setSeconds(0);
+			datef.setMinutes(0);
+			// Calendar cal2 = Calendar.getInstance();
+
+			Date dated = new Date();
+			cal.add(Calendar.MONTH, i);
+			dated = cal.getTime();
+			dated.setDate(1);
+			dated.setHours(0);
+			dated.setSeconds(0);
+			dated.setMinutes(0);
+			System.out.println("date f " + sdf.format(datef) + "date d " + sdf.format(dated));
+
+			System.out.println(getNumberCommentsInDate(dated, datef));
+
+			listeretour.add(getNumberCommentsInDate(dated, datef));
+			// System.out.println(listeretour.get(i));
 		}
 		return listeretour;
 	}
