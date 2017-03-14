@@ -6,6 +6,7 @@ import javax.ejb.Remote;
 
 import tn.esprit.bzbz.valhalla.entity.ReportSubject;
 import tn.esprit.bzbz.valhalla.entity.Section;
+import tn.esprit.bzbz.valhalla.entity.Subject;
 
 @Remote
 public interface SubjectsServicesRemote {
@@ -14,4 +15,7 @@ public interface SubjectsServicesRemote {
 	List<ReportSubject> findReportedSubjectsInSection(Section section);
 
 	Long getNumberSubject();
+
+	Subject findSubjectById(int i);
+	void saveOrUpdateSubject(Subject subject);
 }

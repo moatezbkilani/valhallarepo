@@ -3,7 +3,6 @@ package tn.esprit.bzbz.valhalla.services.sections;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -11,7 +10,6 @@ import javax.persistence.PersistenceContext;
 
 import tn.esprit.bzbz.valhalla.entity.Section;
 import tn.esprit.bzbz.valhalla.entity.Service;
-import tn.esprit.bzbz.valhalla.services.service.ServiceServices;
 import tn.esprit.bzbz.valhalla.services.service.ServiceServicesRemote;
 
 /**

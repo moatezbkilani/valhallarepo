@@ -39,10 +39,23 @@ public class UserServices implements UserServicesRemote, UserServicesLocal {
 
 	}
 
+	@Override
+	public long GenderUsersNumber(String gender) {
+		return (long) entityManager.createQuery("select count(u) from User u where u.gender LIKE:a")
+				.setParameter("a", gender).getSingleResult();
+	}
+	
+	@Override
+	public long usersNumber() {
+
+		return (long) entityManager.createQuery("select count(u) from User u ").getSingleResult();
+
+	}
+	@Override
 	public void updateUser(User user) {
 		entityManager.merge(user);
 	}
-
+	@Override
 	public User findById(Integer id) {
 		try {
 			return (User) entityManager.createQuery("select u from User u where u.id LIKE :custId")

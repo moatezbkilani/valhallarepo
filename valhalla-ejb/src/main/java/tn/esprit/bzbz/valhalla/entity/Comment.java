@@ -1,7 +1,10 @@
 package tn.esprit.bzbz.valhalla.entity;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -21,6 +24,9 @@ public class Comment implements Serializable {
 	private CommentId commentId;
 	private String content;
 
+	@ElementCollection
+	private Map<User, CommentReport> mapOfReport = new HashMap<User, CommentReport>();
+
 	@ManyToOne
 	@JoinColumn(name = "userId", referencedColumnName = "id", updatable = false, insertable = false)
 	private User user;
@@ -28,14 +34,6 @@ public class Comment implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "subjectId", referencedColumnName = "id", updatable = false, insertable = false)
 	private Subject subject;
-
-	public Subject getSubject() {
-		return subject;
-	}
-
-	public void setSubject(Subject subject) {
-		this.subject = subject;
-	}
 
 	public Comment(String content, User user, Subject subject) {
 		super();
@@ -75,4 +73,19 @@ public class Comment implements Serializable {
 		this.content = content;
 	}
 
+	public Subject getSubject() {
+		return subject;
+	}
+
+	public void setSubject(Subject subject) {
+		this.subject = subject;
+	}
+
+	public Map<User, CommentReport> getMapOfReport() {
+		return mapOfReport;
+	}
+
+	public void setMapOfReport(Map<User, CommentReport> mapOfReport) {
+		this.mapOfReport = mapOfReport;
+	}
 }

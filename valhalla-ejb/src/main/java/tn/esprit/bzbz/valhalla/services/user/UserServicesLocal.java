@@ -15,4 +15,8 @@ public interface UserServicesLocal {
 	public void updateUser(User user);
 
 	Long getNumberUser();
+
+	long usersNumber();
+
+	long GenderUsersNumber(String gender);
 }

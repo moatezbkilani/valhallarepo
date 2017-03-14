@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 
 import tn.esprit.bzbz.valhalla.entity.ReportSubject;
 import tn.esprit.bzbz.valhalla.entity.Section;
+import tn.esprit.bzbz.valhalla.entity.Subject;
 
 /**
  * Session Bean implementation class SubjectsServices
@@ -35,7 +36,18 @@ public class SubjectsServices implements SubjectsServicesRemote, SubjectsService
 		return entityManager.createQuery("select rs from ReportSubject rs where rs.subject.section LIKE :se")
 				.setParameter("se", section).getResultList();
 	}
+	@Override
+	public void saveOrUpdateSubject(Subject subject) {
+		entityManager.merge(subject);
 
+	}
+
+	@Override
+	public Subject findSubjectById(int i) {
+		return entityManager.find(Subject.class, i);
+	}
+
+	
 	@Override
 	public Long getNumberSubject() {
 		return (Long) entityManager.createQuery("select count(c) from Subject c").getSingleResult();

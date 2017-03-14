@@ -1,5 +1,7 @@
 package tn.esprit.bzbz.valhalla.services.service;
 
+import java.util.List;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -23,6 +25,11 @@ public class ServiceServices implements ServiceServicesRemote, ServiceServicesLo
 	 */
 	public ServiceServices() {
 		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public List<Service> findServices() {
+		return entityManager.createQuery("select sr from Service sr ").getResultList();
 	}
 
 	@Override

@@ -7,7 +7,11 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import tn.esprit.bzbz.valhalla.entity.Subject;
+import tn.esprit.bzbz.valhalla.entity.User;
 import tn.esprit.bzbz.valhalla.services.comments.CommentsServicesRemote;
+import tn.esprit.bzbz.valhalla.services.subjects.SubjectsServicesRemote;
+import tn.esprit.bzbz.valhalla.services.user.UserServicesRemote;
 
 public class CommentsTest {
 
@@ -23,6 +27,19 @@ public class CommentsTest {
 		for (Long i : l) {
 			System.out.println(i);
 		}
+
+		UserServicesRemote userServicesRemote = (UserServicesRemote) context.lookup(
+				"valhalla-ear/valhalla-ejb/UserServices!tn.esprit.bzbz.valhalla.services.user.UserServicesRemote");
+		SubjectsServicesRemote subjectServicesRemote = (SubjectsServicesRemote) context.lookup(
+				"valhalla-ear/valhalla-ejb/SubjectServices!tn.esprit.bzbz.valhalla.services.subject.SubjectServicesRemote");
+
+		CommentsServicesRemote commentServicesRemote = (CommentsServicesRemote) context.lookup(
+				"valhalla-ear/valhalla-ejb/CommentServices!tn.esprit.bzbz.valhalla.services.comment.CommentServicesRemote");
+		User user = userServicesRemote.findById(1);
+
+		Subject subject = subjectServicesRemote.findSubjectById(1);
+
+		commentServicesRemote.saveOrUpdateComment("abc", user, subject);
 
 	}
 

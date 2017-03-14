@@ -8,6 +8,13 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import tn.esprit.bzbz.valhalla.entity.Comment;
+import tn.esprit.bzbz.valhalla.entity.CommentReport;
+import tn.esprit.bzbz.valhalla.entity.Service;
+import tn.esprit.bzbz.valhalla.entity.Subject;
+import tn.esprit.bzbz.valhalla.entity.User;
+import tn.esprit.bzbz.valhalla.entity.embeddable.CommentId;
+
 /**
  * Session Bean implementation class CommentsServices
  */
@@ -34,6 +41,39 @@ public class CommentsServices implements CommentsServicesRemote, CommentsService
 		return (Long) entityManager
 				.createQuery("select count(c) from Comment c where c.commentId.date between :startdate and :enddate")
 				.setParameter("startdate", startDate).setParameter("enddate", endDate).getSingleResult();
+	}
+
+	@Override
+	public void saveOrUpdateComment(String content, User user, Subject subject) {
+		Comment comment = new Comment(content, user, subject);
+		entityManager.merge(comment);
+
+	}
+
+	@Override
+	public void reportComment(User user, CommentId commentId, CommentReport commentReport) {
+		Comment comment = findCommentById(commentId);
+		comment.getMapOfReport().put(user, commentReport);
+
+		entityManager.merge(comment);
+
+	}
+
+	@Override
+	public Long numberTotalComments() {
+		return (Long) entityManager.createQuery("select count(u) from Comment u").getSingleResult();
+	}
+
+	@Override
+	public Long numberComments(Service service) {
+		return (Long) entityManager
+				.createQuery("select count(u) from Comment u where u.subject.section.service LIKE :a")
+				.setParameter("a", service).getSingleResult();
+	}
+
+	@Override
+	public Comment findCommentById(CommentId commentId) {
+		return entityManager.find(Comment.class, commentId);
 	}
 
 	@Override

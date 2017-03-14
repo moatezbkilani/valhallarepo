@@ -19,8 +19,12 @@ public interface UserServicesRemote {
 	List<User> findAllUser();
 
 	void downgradeModerator(Integer id);
-	
-	void upgradeUser ( Integer id);
+
+	void upgradeUser(Integer id);
 
 	Long getNumberUser();
+
+	long usersNumber();
+	
+	long GenderUsersNumber(String gender);
 }
