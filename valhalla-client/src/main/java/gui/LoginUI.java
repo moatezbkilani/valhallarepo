@@ -20,6 +20,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
+import java.awt.Color;
 
 public class LoginUI extends JFrame {
 
@@ -84,15 +86,28 @@ public class LoginUI extends JFrame {
 				
 			}
 		});
-		btnLogin.setBounds(602, 386, 89, 23);
+		btnLogin.setBounds(524, 400, 104, 31);
 		contentPane.add(btnLogin);
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(515, 243, 46, 14);
+		JButton btnRecoverPassword = new JButton("recover password");
+		btnRecoverPassword.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		btnRecoverPassword.setBounds(703, 404, 119, 23);
+		contentPane.add(btnRecoverPassword);
+		
+		JLabel lblNewLabel = new JLabel("Email");
+		lblNewLabel.setForeground(Color.WHITE);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblNewLabel.setBounds(486, 232, 71, 32);
 		contentPane.add(lblNewLabel);
 		
-		JLabel lblPasss = new JLabel("passs");
-		lblPasss.setBounds(515, 324, 46, 14);
+		JLabel lblPasss = new JLabel("Password");
+		lblPasss.setForeground(Color.WHITE);
+		lblPasss.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblPasss.setBounds(487, 324, 100, 14);
 		contentPane.add(lblPasss);
 		
 		email = new JTextField();
