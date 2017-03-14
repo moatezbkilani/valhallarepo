@@ -128,7 +128,7 @@ public class SectionsUI extends JFrame {
 		JButton btnHome = new JButton("back");
 		btnHome.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MainMenuUI f=new MainMenuUI();
+				MainMenuUI f=new MainMenuUI(MainMenuUI.connectedUser);
 				f.pack();
 			    f.setLocationRelativeTo(null);
 				f.setVisible(true);

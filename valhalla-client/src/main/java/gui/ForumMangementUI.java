@@ -137,7 +137,7 @@ public class ForumMangementUI extends JFrame {
 		btnBck.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				MainMenuUI f = new MainMenuUI();
+				MainMenuUI f = new MainMenuUI(MainMenuUI.connectedUser);
 
 				f.setLocationRelativeTo(null);
 				f.setVisible(true);

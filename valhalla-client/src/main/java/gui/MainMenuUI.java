@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import tn.esprit.bzbz.valhalla.entity.User;
+
 import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -15,6 +18,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.UIManager;
 
 public class MainMenuUI extends JFrame {
+	
+	public static User connectedUser;
 
 	private JPanel contentPane;
 
@@ -25,7 +30,7 @@ public class MainMenuUI extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainMenuUI frame = new MainMenuUI();
+					MainMenuUI frame = new MainMenuUI(MainMenuUI.connectedUser);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -37,7 +42,8 @@ public class MainMenuUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MainMenuUI() {
+	public MainMenuUI(User connectedUser) {
+		this.connectedUser = connectedUser;
 		setMinimumSize(new Dimension(1280, 720));
 		setResizable(false);
 		setMaximumSize(new Dimension(1280, 720));

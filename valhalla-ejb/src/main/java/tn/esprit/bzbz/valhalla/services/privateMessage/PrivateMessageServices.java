@@ -97,7 +97,7 @@ public class PrivateMessageServices implements PrivateMessageServicesRemote, Pri
 	
 	public List<Message> findMessages(User sessionUser,User secondParty){
 		try {
-			Query q = entityManager.createQuery("select m from Message m where (m.userOne LIKE :lowel AND m.userTwo LIKE :theni) OR (m.userOne LIKE :theni AND m.userTwo LIKE :lowel) ORDER BY m.messageId.date DESC");
+			Query q = entityManager.createQuery("select m from Message m where (m.userOne LIKE :lowel AND m.userTwo LIKE :theni) OR (m.userOne LIKE :theni AND m.userTwo LIKE :lowel) ORDER BY m.messageId.date ASC");
 			q.setParameter("lowel", sessionUser);
 			q.setParameter("theni", secondParty);
 			return (List<Message>) q.getResultList();
