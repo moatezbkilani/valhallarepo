@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -191,6 +192,7 @@ public class SectionsUI extends JFrame {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+
 				table.setColumnSelectionInterval(0, 0);
 				comboService.setSelectedItem(table.getValueAt(table.getSelectedRow(), 5));
 				name.setText(table.getValueAt(table.getSelectedRow(), 2).toString());
@@ -202,27 +204,32 @@ public class SectionsUI extends JFrame {
 		Delete.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Context context;
-				try {
-					context = new InitialContext();
-					SectionsServicesRemote serviceServicesRemote = (SectionsServicesRemote) context.lookup(
-							"valhalla-ear/valhalla-ejb/SectionsServices!tn.esprit.bzbz.valhalla.services.sections.SectionsServicesRemote");
-					serviceServicesRemote.deleteSection(id);
-					table.setModel(new SectionModel());
+				int p = JOptionPane.showConfirmDialog(null, "Are you sure to Banne this user ", "banne",
+						JOptionPane.YES_NO_OPTION);
+				if (p == 0) {
+					Context context;
+					try {
+						context = new InitialContext();
+						SectionsServicesRemote serviceServicesRemote = (SectionsServicesRemote) context.lookup(
+								"valhalla-ear/valhalla-ejb/SectionsServices!tn.esprit.bzbz.valhalla.services.sections.SectionsServicesRemote");
+						serviceServicesRemote.deleteSection(id);
+						table.setModel(new SectionModel());
 
-					table.getColumnModel().getColumn(0).setMinWidth(0);
-					table.getColumnModel().getColumn(0).setMaxWidth(0);
-					table.getColumnModel().getColumn(0).setWidth(0);
-					table.getColumnModel().getColumn(4).setMinWidth(0);
-					table.getColumnModel().getColumn(4).setMaxWidth(0);
-					table.getColumnModel().getColumn(4).setWidth(0);
-					table.getColumnModel().getColumn(1).setMinWidth(0);
-					table.getColumnModel().getColumn(1).setMaxWidth(0);
-					table.getColumnModel().getColumn(1).setWidth(0);
+						table.getColumnModel().getColumn(0).setMinWidth(0);
+						table.getColumnModel().getColumn(0).setMaxWidth(0);
+						table.getColumnModel().getColumn(0).setWidth(0);
+						table.getColumnModel().getColumn(4).setMinWidth(0);
+						table.getColumnModel().getColumn(4).setMaxWidth(0);
+						table.getColumnModel().getColumn(4).setWidth(0);
+						table.getColumnModel().getColumn(1).setMinWidth(0);
+						table.getColumnModel().getColumn(1).setMaxWidth(0);
+						table.getColumnModel().getColumn(1).setWidth(0);
 
-				} catch (NamingException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					} catch (NamingException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
 				}
 			}
 		});
@@ -230,34 +237,44 @@ public class SectionsUI extends JFrame {
 		btnupdate.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Context context;
-				try {
-					context = new InitialContext();
-					SectionsServicesRemote serviceServicesRemote = (SectionsServicesRemote) context.lookup(
-							"valhalla-ear/valhalla-ejb/SectionsServices!tn.esprit.bzbz.valhalla.services.sections.SectionsServicesRemote");
-					serviceServicesRemote.findSectionById(id);
-					for (Service s : comboServ) {
-						if (s.getServiceName().equals(comboService.getSelectedItem())) {
-							idSer = s.getId();
+				if (table.getSelectedRow() == -1) {
+					JOptionPane.showMessageDialog(null, "Please, select a section to update");
+				} else {
+
+					if (comboService.getSelectedIndex() == 0 || name.getText().equals("")
+							|| description.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Please, fill all the fields");
+					} else {
+						Context context;
+						try {
+							context = new InitialContext();
+							SectionsServicesRemote serviceServicesRemote = (SectionsServicesRemote) context.lookup(
+									"valhalla-ear/valhalla-ejb/SectionsServices!tn.esprit.bzbz.valhalla.services.sections.SectionsServicesRemote");
+							serviceServicesRemote.findSectionById(id);
+							for (Service s : comboServ) {
+								if (s.getServiceName().equals(comboService.getSelectedItem())) {
+									idSer = s.getId();
+								}
+							}
+							serviceServicesRemote.updateSection(id, name.getText(), description.getText(), "", idSer);
+
+							table.setModel(new SectionModel());
+
+							table.getColumnModel().getColumn(0).setMinWidth(0);
+							table.getColumnModel().getColumn(0).setMaxWidth(0);
+							table.getColumnModel().getColumn(0).setWidth(0);
+							table.getColumnModel().getColumn(4).setMinWidth(0);
+							table.getColumnModel().getColumn(4).setMaxWidth(0);
+							table.getColumnModel().getColumn(4).setWidth(0);
+							table.getColumnModel().getColumn(1).setMinWidth(0);
+							table.getColumnModel().getColumn(1).setMaxWidth(0);
+							table.getColumnModel().getColumn(1).setWidth(0);
+
+						} catch (NamingException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
 						}
 					}
-					serviceServicesRemote.updateSection(id, name.getText(), description.getText(), "", idSer);
-
-					table.setModel(new SectionModel());
-
-					table.getColumnModel().getColumn(0).setMinWidth(0);
-					table.getColumnModel().getColumn(0).setMaxWidth(0);
-					table.getColumnModel().getColumn(0).setWidth(0);
-					table.getColumnModel().getColumn(4).setMinWidth(0);
-					table.getColumnModel().getColumn(4).setMaxWidth(0);
-					table.getColumnModel().getColumn(4).setWidth(0);
-					table.getColumnModel().getColumn(1).setMinWidth(0);
-					table.getColumnModel().getColumn(1).setMaxWidth(0);
-					table.getColumnModel().getColumn(1).setWidth(0);
-
-				} catch (NamingException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -265,29 +282,33 @@ public class SectionsUI extends JFrame {
 		btnAdd.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Context context;
-				try {
-					context = new InitialContext();
-					SectionsServicesRemote serviceServicesRemote = (SectionsServicesRemote) context.lookup(
-							"valhalla-ear/valhalla-ejb/SectionsServices!tn.esprit.bzbz.valhalla.services.sections.SectionsServicesRemote");
-					serviceServicesRemote.createSection(1, name.getText(), description.getText(), "", "");
-					table.setModel(new SectionModel());
+				if (comboService.getSelectedIndex() == 0 || name.getText().equals("")
+						|| description.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Please, fill all the fields");
+				} else {
+					Context context;
+					try {
+						context = new InitialContext();
+						SectionsServicesRemote serviceServicesRemote = (SectionsServicesRemote) context.lookup(
+								"valhalla-ear/valhalla-ejb/SectionsServices!tn.esprit.bzbz.valhalla.services.sections.SectionsServicesRemote");
+						serviceServicesRemote.createSection(1, name.getText(), description.getText(), "", "");
+						table.setModel(new SectionModel());
 
-					table.getColumnModel().getColumn(0).setMinWidth(0);
-					table.getColumnModel().getColumn(0).setMaxWidth(0);
-					table.getColumnModel().getColumn(0).setWidth(0);
-					table.getColumnModel().getColumn(4).setMinWidth(0);
-					table.getColumnModel().getColumn(4).setMaxWidth(0);
-					table.getColumnModel().getColumn(4).setWidth(0);
-					table.getColumnModel().getColumn(1).setMinWidth(0);
-					table.getColumnModel().getColumn(1).setMaxWidth(0);
-					table.getColumnModel().getColumn(1).setWidth(0);
+						table.getColumnModel().getColumn(0).setMinWidth(0);
+						table.getColumnModel().getColumn(0).setMaxWidth(0);
+						table.getColumnModel().getColumn(0).setWidth(0);
+						table.getColumnModel().getColumn(4).setMinWidth(0);
+						table.getColumnModel().getColumn(4).setMaxWidth(0);
+						table.getColumnModel().getColumn(4).setWidth(0);
+						table.getColumnModel().getColumn(1).setMinWidth(0);
+						table.getColumnModel().getColumn(1).setMaxWidth(0);
+						table.getColumnModel().getColumn(1).setWidth(0);
 
-				} catch (NamingException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					} catch (NamingException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
-
 			}
 		});
 
