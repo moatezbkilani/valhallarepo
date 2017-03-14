@@ -71,7 +71,7 @@ public class SectionsUI extends JFrame {
 		btnOk.setBounds(457, 469, 71, 23);
 		contentPane.add(btnOk);
 		
-		JLabel lblNewLabel = new JLabel("Service Name :");
+		JLabel lblNewLabel = new JLabel("Section Name :");
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblNewLabel.setBounds(185, 301, 112, 19);
