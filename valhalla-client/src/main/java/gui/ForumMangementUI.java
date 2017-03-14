@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.naming.NamingException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -76,11 +77,18 @@ public class ForumMangementUI extends JFrame {
 		btnSection.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				SectionsUI f = new SectionsUI();
+				SectionsUI f;
+				try {
+					f = new SectionsUI();
+					f.setLocationRelativeTo(null);
+					f.setVisible(true);
+					ForumMangementUI.this.setVisible(false);
+					
+				} catch (NamingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
-				f.setLocationRelativeTo(null);
-				f.setVisible(true);
-				ForumMangementUI.this.setVisible(false);
 				
 			}
 		});
@@ -137,7 +145,7 @@ public class ForumMangementUI extends JFrame {
 		btnBck.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				MainMenuUI f = new MainMenuUI();
+				MainMenuUI f = new MainMenuUI(MainMenuUI.connectedUser);
 
 				f.setLocationRelativeTo(null);
 				f.setVisible(true);

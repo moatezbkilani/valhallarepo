@@ -7,7 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import tn.esprit.bzbz.valhalla.entity.User;
 import tn.esprit.bzbz.valhalla.services.signin.SignInServicesRemote;
+import tn.esprit.bzbz.valhalla.services.user.UserServicesRemote;
 
 import java.awt.Dimension;
 import javax.swing.JLabel;
@@ -58,7 +60,7 @@ public class LoginUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		MainMenuUI n =new MainMenuUI();
+		MainMenuUI n =new MainMenuUI(MainMenuUI.connectedUser);
 		
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
@@ -68,22 +70,22 @@ public class LoginUI extends JFrame {
 					context = new InitialContext();
 					SignInServicesRemote sisr = (SignInServicesRemote) context.lookup(
 							"valhalla-ear/valhalla-ejb/SignInServices!tn.esprit.bzbz.valhalla.services.signin.SignInServicesRemote");
-					sisr.signIn(email.getText(), password.getText());
-					
-					MainMenuUI n =new MainMenuUI();
-					n.setVisible(true);
-					LoginUI.this.setVisible(false);
-					
-					
-					
-					
+					// sisr.signIn(email.getText(), password.getText());
+					Context context1 = new InitialContext();
+					UserServicesRemote usr = (UserServicesRemote) context1.lookup(
+							"valhalla-ear/valhalla-ejb/UserServices!tn.esprit.bzbz.valhalla.services.user.UserServicesRemote");
+					User connectedUser = usr.findById(sisr.signIn(email.getText(), password.getText()));
+					if (connectedUser != null) {
+						MainMenuUI n = new MainMenuUI(connectedUser);
+						n.setVisible(true);
+						LoginUI.this.setVisible(false);
+					}
+
 				} catch (NamingException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
 
-				
 			}
 		});
 		btnLogin.setBounds(524, 400, 104, 31);

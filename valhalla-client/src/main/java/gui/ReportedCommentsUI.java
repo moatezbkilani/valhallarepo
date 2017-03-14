@@ -104,7 +104,7 @@ public class ReportedCommentsUI extends JFrame {
 		JButton home = new JButton("home");
 		home.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MainMenuUI f=new MainMenuUI();
+				MainMenuUI f=new MainMenuUI(MainMenuUI.connectedUser);
 				f.pack();
 			    f.setLocationRelativeTo(null);
 				f.setVisible(true);
