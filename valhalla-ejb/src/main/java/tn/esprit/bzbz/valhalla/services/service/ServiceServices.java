@@ -70,6 +70,8 @@ public class ServiceServices implements ServiceServicesRemote, ServiceServicesLo
 				serviceToUpdate.setDescription(description);
 			if (!image.equals(""))
 				serviceToUpdate.setImage(image);
+			else
+				serviceToUpdate.setImage("");
 			entityManager.merge(serviceToUpdate);
 			entityManager.persist(serviceToUpdate);
 			return true;

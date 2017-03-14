@@ -6,7 +6,6 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.List;
 
 import javax.naming.Context;
@@ -49,6 +48,7 @@ public class ServicesUI extends JFrame {
 	private JTable servicesTable;
 
 	private Service selectedService;
+	private String selectedImageName;
 
 	/**
 	 * Launch the application.
@@ -88,6 +88,16 @@ public class ServicesUI extends JFrame {
 				"valhalla-ear/valhalla-ejb/ServiceServices!tn.esprit.bzbz.valhalla.services.service.ServiceServicesRemote");
 
 		return serviceServicesRemote.findServiceById(serviceId);
+	}
+
+	public void addService(Service service) throws NamingException {
+		// TODO Auto-generated method stub
+		Context context = new InitialContext();
+		ServiceServicesRemote serviceServicesRemote = (ServiceServicesRemote) context.lookup(
+				"valhalla-ear/valhalla-ejb/ServiceServices!tn.esprit.bzbz.valhalla.services.service.ServiceServicesRemote");
+
+		serviceServicesRemote.createService(service.getServiceName(), service.getDescription(), service.getImage());
+		;
 	}
 
 	public void deleteService(Service service) throws NamingException {
@@ -168,6 +178,8 @@ public class ServicesUI extends JFrame {
 						Integer selectedServiceId = Integer
 								.valueOf((String) servicesTable.getValueAt(servicesTable.getSelectedRow(), 0));
 						selectedService = findServiceById(selectedServiceId);
+						name.setText(selectedService.getServiceName());
+						description.setText(selectedService.getDescription());
 					}
 				} catch (IndexOutOfBoundsException ex) {
 					ex.printStackTrace();
@@ -186,9 +198,9 @@ public class ServicesUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fc = new JFileChooser();
 				int returnVal = fc.showDialog(contentPane, "Attach");
-				File f = fc.getSelectedFile();
-				System.out.println(fc.getName(f));
-
+				// selectedImage = fc.getSelectedFile();
+				selectedImageName = fc.getName(fc.getSelectedFile());
+				// System.out.println(fc.getName(selectedImage));
 			}
 		});
 		button.setBounds(475, 403, 71, 23);
@@ -207,22 +219,55 @@ public class ServicesUI extends JFrame {
 		contentPane.add(lblServicesDescription);
 
 		Add = new JButton("Add");
+		Add.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (!name.getText().equals(""))
+					if (!description.getText().equals(""))
+
+						try {
+							addService(new Service(name.getText(), description.getText(), selectedImageName));
+							servicesTable.setModel(tableModel());
+						} catch (NamingException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+
+			}
+		});
 		Add.setBounds(644, 528, 101, 33);
 		contentPane.add(Add);
-		
+
 		btnUpdate = new JButton("Update");
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				selectedService.setServiceName((String) servicesTable.getValueAt(servicesTable.getSelectedRow(), 1));
-				selectedService.setDescription((String) servicesTable.getValueAt(servicesTable.getSelectedRow(), 2));
-				selectedService.setImage((String) servicesTable.getValueAt(servicesTable.getSelectedRow(), 3));
-				System.out.println(selectedService.getServiceName());
-				try {
-					updateService(selectedService);
-				} catch (NamingException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				if (!name.getText().equals("")) 
+					if (!description.getText().equals("")) 
+						/*selectedService
+								.setServiceName((String) servicesTable.getValueAt(servicesTable.getSelectedRow(), 1));
+						selectedService
+								.setDescription((String) servicesTable.getValueAt(servicesTable.getSelectedRow(), 2));
+						selectedService.setImage((String) servicesTable.getValueAt(servicesTable.getSelectedRow(), 3));
+						try {
+							updateService(selectedService);
+						} catch (NamingException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+				}else{*/
+					try {
+						selectedService
+						.setServiceName(name.getText());
+				selectedService
+						.setDescription(description.getText());
+				selectedService.setImage(selectedImageName);
+						updateService(selectedService);
+					} catch (NamingException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				
+				
 				servicesTable.setModel(tableModel());
 			}
 		});
@@ -295,6 +340,5 @@ public class ServicesUI extends JFrame {
 		btnHome.setBounds(1175, 11, 59, 54);
 		contentPane.add(btnHome);
 	}
-	
-	
+
 }
