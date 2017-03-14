@@ -17,7 +17,7 @@ public class UserModel extends AbstractTableModel {
 	*/
 	private static final long serialVersionUID = 1L;
 
-	String[] col = { "id", "Username", "Email", "Registration Date" };
+	String[] col = { "id", "Username", "State", "Role" };
 
 	public UserModel() throws NamingException {
 
@@ -60,7 +60,7 @@ public class UserModel extends AbstractTableModel {
 		case 1:
 			return users.get(rowIndex).getUsername();
 		case 2:
-			return users.get(rowIndex).getEmail();
+			return users.get(rowIndex).getState();
 		case 3:
 			return users.get(rowIndex).getRole();
 

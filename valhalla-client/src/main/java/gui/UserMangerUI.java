@@ -237,23 +237,20 @@ public class UserMangerUI extends JFrame {
 
 					Firstname.setText((String) users.getFirstName());
 					lastname.setText((String) users.getLastName());
-					
-					
-					
-					//Dateofbith.setText((String)df.format(users.getBirthDate()));
-					
-					
-					
+
+					// Dateofbith.setText((String)df.format(users.getBirthDate()));
+
 					gender.setText((String) users.getGender());
 					email.setText((String) users.getEmail());
 					password.setText((String) users.getPassword());
-					
-					//Registrationdate.setText((String)df.format(users.getRegistrationDate()));
-					//lastlogin.setText((String)df.format(users.getLastLogin()));
+
+					// Registrationdate.setText((String)df.format(users.getRegistrationDate()));
+					// lastlogin.setText((String)df.format(users.getLastLogin()));
 					usernme.setText((String) users.getUsername());
 					sate.setText((String) users.getState());
 					role.setText((String) users.getRole());
-					//promotion.setText( (String)df.format(users.getPromotionDate()));
+					// promotion.setText(
+					// (String)df.format(users.getPromotionDate()));
 				} catch (NamingException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -272,6 +269,33 @@ public class UserMangerUI extends JFrame {
 		JButton btnBanne = new JButton("Banne");
 		btnBanne.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+
+				Context context;
+				int p = JOptionPane.showConfirmDialog(null, "Are you sure to Banne this user ", "banne",
+						JOptionPane.YES_NO_OPTION);
+				if (p == 0) {
+					try {
+						int i = table.getSelectedRow();
+						context = new InitialContext();
+						UserServicesRemote UserServicesRemote = (UserServicesRemote) context.lookup(
+								"valhalla-ear/valhalla-ejb/UserServices!tn.esprit.bzbz.valhalla.services.user.UserServicesRemote");
+						UserServicesRemote.banUser((int) table.getValueAt(i, 0));;
+
+						table.setModel(new UserModel());
+						table.setVisible(false);
+						table.setVisible(true);
+						JOptionPane.showMessageDialog(null, "User Banned");
+						// System.out.println(i);
+					} catch (NamingException e1) {
+						JOptionPane.showMessageDialog(null, "Please select a user to banne");
+						e1.printStackTrace();
+					}
+				}
+
+			
+				
+				
 			}
 		});
 		btnBanne.setBounds(1057, 590, 115, 36);
@@ -348,9 +372,7 @@ public class UserMangerUI extends JFrame {
 		GoToMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				
-				
-				MainMenuUI f=new MainMenuUI(MainMenuUI.connectedUser);
+				MainMenuUI f = new MainMenuUI();
 				f.pack();
 				f.setLocationRelativeTo(null);
 				f.setVisible(true);
