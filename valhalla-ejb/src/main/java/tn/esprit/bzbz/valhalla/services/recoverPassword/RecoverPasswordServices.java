@@ -36,7 +36,7 @@ public class RecoverPasswordServices implements RecoverPasswordServicesRemote, R
 
 	@Override
 	public boolean sendNewPassword(String mail) {
-
+		System.out.println("OKKKK");
 		try {
 			char[] chars = "abcdefghijklmnopqrstuvwxyz-0123456789$.+/_".toCharArray();
 			StringBuilder sb = new StringBuilder();
@@ -45,11 +45,13 @@ public class RecoverPasswordServices implements RecoverPasswordServicesRemote, R
 				char c = chars[random.nextInt(chars.length)];
 				sb.append(c);
 			}
+			
 			String newpassword = sb.toString();
 			User user = (User) entityManager.createQuery("select u from User u where u.email LIKE :custName")
 					.setParameter("custName", mail).getSingleResult();
 			user.setPassword(newpassword);
 			entityManager.merge(user);
+			
 			Message message = new MimeMessage(session);
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mail, false));
 			message.setSubject("Nouveau mot de passe pour votre compte sur Valhalla Forum");

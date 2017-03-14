@@ -24,6 +24,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class LoginUI extends JFrame {
 
@@ -79,6 +81,7 @@ public class LoginUI extends JFrame {
 						MainMenuUI n = new MainMenuUI(connectedUser);
 						n.setVisible(true);
 						LoginUI.this.setVisible(false);
+						
 					}
 
 				} catch (NamingException e) {
@@ -88,17 +91,25 @@ public class LoginUI extends JFrame {
 
 			}
 		});
-		btnLogin.setBounds(524, 400, 104, 31);
+		btnLogin.setBounds(617, 387, 110, 31);
 		contentPane.add(btnLogin);
 		
-		JButton btnRecoverPassword = new JButton("recover password");
-		btnRecoverPassword.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		JLabel lblForgetYouPassword = new JLabel("Forget you password ?");
+		lblForgetYouPassword.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				RecoverUI f = new RecoverUI();
+
+				f.setLocationRelativeTo(null);
+				f.setVisible(true);
+				LoginUI.this.setVisible(false);
 				
 			}
 		});
-		btnRecoverPassword.setBounds(703, 404, 119, 23);
-		contentPane.add(btnRecoverPassword);
+		lblForgetYouPassword.setForeground(Color.WHITE);
+		lblForgetYouPassword.setToolTipText("Recover You Password");
+		lblForgetYouPassword.setBounds(617, 429, 110, 14);
+		contentPane.add(lblForgetYouPassword);
 		
 		JLabel lblNewLabel = new JLabel("Email");
 		lblNewLabel.setForeground(Color.WHITE);

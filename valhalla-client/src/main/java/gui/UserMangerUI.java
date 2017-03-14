@@ -242,23 +242,27 @@ public class UserMangerUI extends JFrame {
 							"valhalla-ear/valhalla-ejb/UserServices!tn.esprit.bzbz.valhalla.services.user.UserServicesRemote");
 					User users = UserServicesRemote.findById(Integer.parseInt(table.getValueAt(i, 0).toString()));
 					System.out.println(users.getFirstName());
-
+					
+					
+					String d1 = df.format(users.getBirthDate());
+					String d2 = df.format(users.getRegistrationDate());
+					String d3 = df.format(users.getLastLogin());
+					String d4 = df.format(users.getPromotionDate());
+					
 					Firstname.setText((String) users.getFirstName());
 					lastname.setText((String) users.getLastName());
-
-					// Dateofbith.setText((String)df.format(users.getBirthDate()));
-
+					Dateofbith.setText(d1);
 					gender.setText((String) users.getGender());
 					email.setText((String) users.getEmail());
 					password.setText((String) users.getPassword());
-
-					// Registrationdate.setText((String)df.format(users.getRegistrationDate()));
-					// lastlogin.setText((String)df.format(users.getLastLogin()));
+					Registrationdate.setText(d2);
+					lastlogin.setText(d3);
 					usernme.setText((String) users.getUsername());
 					sate.setText((String) users.getState());
 					role.setText((String) users.getRole());
-					// promotion.setText(
-					// (String)df.format(users.getPromotionDate()));
+					//promotion.setText(4);
+
+					
 				} catch (NamingException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
