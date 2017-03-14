@@ -19,44 +19,46 @@ import tn.esprit.bzbz.valhalla.services.service.ServiceServicesRemote;
 public class SectionsServices implements SectionsServicesRemote, SectionsServicesLocal {
 	@PersistenceContext
 	EntityManager entityManager;
-	
-	@EJB private ServiceServicesRemote serviceServicesRemote;
-    /**
-     * Default constructor. 
-     */
-    public SectionsServices() {
-        // TODO Auto-generated constructor stub
-    }
-    
-    public Service findService(Integer id) {
-        return serviceServicesRemote.findServiceById(id);
-    }
-    
-    @Override
-    public Boolean createSection(Integer serviceId, String sectionName,String description, String image, String state)
-    {
-    	Service parentService = this.findService(serviceId);
-    	if(parentService != null){
-    		Section section = new Section(sectionName,description,image,state,parentService);
-    		entityManager.persist(section);
-    		return true;
-    	}
-    	return false;
-    }
-    
-    @Override
-    public Boolean deleteSection(Integer sectionId)
-    {
-    	Section sectionToDelete = this.findSectionById(sectionId);
-    	if(sectionToDelete != null){
-    		entityManager.merge(sectionToDelete);
-    		entityManager.remove(sectionToDelete);
-    		return true;
-    	}
-    	return false;
-    }
-    
-    @Override
+
+	@EJB
+	private ServiceServicesRemote serviceServicesRemote;
+
+	/**
+	 * Default constructor.
+	 */
+	public SectionsServices() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Service findService(Integer id) {
+		return serviceServicesRemote.findServiceById(id);
+	}
+
+	@Override
+	public Boolean createSection(Integer serviceId, String sectionName, String description, String image,
+			String state) {
+		Service parentService = this.findService(serviceId);
+		if (parentService != null) {
+			Section section = new Section(sectionName, description, image, state, parentService);
+			entityManager.persist(section);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public Boolean deleteSection(Integer sectionId) {
+		Section sectionToDelete = this.findSectionById(sectionId);
+		if (sectionToDelete != null) {
+			sectionToDelete.setState("Removed");
+			entityManager.merge(sectionToDelete);
+
+			return true;
+		}
+		return false;
+	}
+
+	@Override
 	public Section findSectionById(Integer id) {
 		try {
 			return (Section) entityManager.createQuery("select s from Section s where s.id LIKE :sectName")
@@ -67,11 +69,12 @@ public class SectionsServices implements SectionsServicesRemote, SectionsService
 			return null;
 		}
 	}
-    
-    @Override
-	public Boolean updateSection(Integer sectionId, String name, String description, String image,Integer newServiceId) {
+
+	@Override
+	public Boolean updateSection(Integer sectionId, String name, String description, String image,
+			Integer newServiceId) {
 		Section sectionToUpdate = this.findSectionById(sectionId);
-    	Service newParentService = this.findService(newServiceId);
+		Service newParentService = this.findService(newServiceId);
 
 		if (sectionToUpdate != null) {
 			if (!name.equals(""))
@@ -80,7 +83,7 @@ public class SectionsServices implements SectionsServicesRemote, SectionsService
 				sectionToUpdate.setDescription(description);
 			if (!image.equals(""))
 				sectionToUpdate.setImage(image);
-			if((newServiceId != null) && (newParentService != null))
+			if ((newServiceId != null) && (newParentService != null))
 				sectionToUpdate.setService(newParentService);
 			entityManager.merge(sectionToUpdate);
 			entityManager.persist(sectionToUpdate);
@@ -88,8 +91,8 @@ public class SectionsServices implements SectionsServicesRemote, SectionsService
 		}
 		return false;
 	}
-    
-    @Override
+
+	@Override
 	public List<Section> findSectionsByService(Service service) {
 		try {
 			return (List<Section>) entityManager.createQuery("select s from Section s where s.service LIKE :servId")
@@ -100,8 +103,8 @@ public class SectionsServices implements SectionsServicesRemote, SectionsService
 			return null;
 		}
 	}
-    
-    @Override
+
+	@Override
 	public List<Section> findSectionsByServiceId(Integer serviceId) {
 		try {
 			return (List<Section>) entityManager.createQuery("select s from Section s where s.service.id LIKE :servId")
@@ -112,12 +115,23 @@ public class SectionsServices implements SectionsServicesRemote, SectionsService
 			return null;
 		}
 	}
-    
-    @Override
+
+	@Override
 	public List<Section> findAllSections() {
 		try {
-			return (List<Section>) entityManager.createQuery("select s from Section s")
-					.getResultList();
+			return (List<Section>) entityManager.createQuery("select s from Section s").getResultList();
+		} catch (NoResultException e) {
+			return null;
+		} catch (NullPointerException e) {
+			return null;
+		}
+	}
+
+	@Override
+	public List<Section> findAllSectionsNonRemoved() {
+		try {
+			return (List<Section>) entityManager
+					.createQuery("select s from Section s where s.state is NULL or s.state LIKE '' ").getResultList();
 		} catch (NoResultException e) {
 			return null;
 		} catch (NullPointerException e) {
