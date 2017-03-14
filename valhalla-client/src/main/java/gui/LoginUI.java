@@ -1,31 +1,29 @@
 package gui;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import tn.esprit.bzbz.valhalla.entity.User;
 import tn.esprit.bzbz.valhalla.services.signin.SignInServicesRemote;
 import tn.esprit.bzbz.valhalla.services.user.UserServicesRemote;
-
-import java.awt.Dimension;
-import javax.swing.JLabel;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.swing.ImageIcon;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Font;
-import java.awt.Color;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class LoginUI extends JFrame {
 
@@ -62,8 +60,8 @@ public class LoginUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		MainMenuUI n =new MainMenuUI(MainMenuUI.connectedUser);
-		
+		MainMenuUI n = new MainMenuUI(MainMenuUI.connectedUser);
+
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -81,7 +79,7 @@ public class LoginUI extends JFrame {
 						MainMenuUI n = new MainMenuUI(connectedUser);
 						n.setVisible(true);
 						LoginUI.this.setVisible(false);
-						
+
 					}
 
 				} catch (NamingException e) {
@@ -91,10 +89,10 @@ public class LoginUI extends JFrame {
 
 			}
 		});
-		btnLogin.setBounds(617, 387, 110, 31);
+		btnLogin.setBounds(617, 387, 177, 31);
 		contentPane.add(btnLogin);
-		
-		JLabel lblForgetYouPassword = new JLabel("Forget you password ?");
+
+		JLabel lblForgetYouPassword = new JLabel("Forget your password ?");
 		lblForgetYouPassword.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -103,35 +101,35 @@ public class LoginUI extends JFrame {
 				f.setLocationRelativeTo(null);
 				f.setVisible(true);
 				LoginUI.this.setVisible(false);
-				
+
 			}
 		});
 		lblForgetYouPassword.setForeground(Color.WHITE);
-		lblForgetYouPassword.setToolTipText("Recover You Password");
-		lblForgetYouPassword.setBounds(617, 429, 110, 14);
+		lblForgetYouPassword.setToolTipText("Recover Your Password");
+		lblForgetYouPassword.setBounds(617, 429, 131, 14);
 		contentPane.add(lblForgetYouPassword);
-		
+
 		JLabel lblNewLabel = new JLabel("Email");
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblNewLabel.setBounds(486, 232, 71, 32);
 		contentPane.add(lblNewLabel);
-		
+
 		JLabel lblPasss = new JLabel("Password");
 		lblPasss.setForeground(Color.WHITE);
 		lblPasss.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblPasss.setBounds(487, 324, 100, 14);
 		contentPane.add(lblPasss);
-		
+
 		email = new JTextField();
 		email.setBounds(617, 236, 177, 28);
 		contentPane.add(email);
 		email.setColumns(10);
-		
+
 		password = new JPasswordField();
 		password.setBounds(617, 320, 177, 26);
 		contentPane.add(password);
-		
+
 		JLabel BG = new JLabel("");
 		BG.setIcon(new ImageIcon(LoginUI.class.getResource("/images/login.jpg")));
 		BG.setBounds(0, 0, 1264, 681);
