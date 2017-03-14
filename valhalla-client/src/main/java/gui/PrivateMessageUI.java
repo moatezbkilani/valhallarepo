@@ -1,10 +1,26 @@
 package gui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
@@ -21,32 +37,13 @@ import tn.esprit.bzbz.valhalla.entity.Message;
 import tn.esprit.bzbz.valhalla.entity.User;
 import tn.esprit.bzbz.valhalla.services.privateMessage.PrivateMessageServicesRemote;
 
-import java.awt.Dimension;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.awt.event.ActionEvent;
-
 public class PrivateMessageUI extends JFrame {
-
+	JList conversationsList;
 	public static Set<User> secondParties;
 	private JPanel contentPane;
 	private JTextPane messagesContainer;
 	private JTextArea messagesArea;
 	private User secondParty;
-
 
 	/**
 	 * Launch the application.
@@ -97,7 +94,7 @@ public class PrivateMessageUI extends JFrame {
 			listModel.addElement("" + u.getFirstName() + " " + u.getLastName());
 		}
 
-		JList conversationsList = new JList();
+		conversationsList = new JList();
 		conversationsList.setSelectionBackground(Color.LIGHT_GRAY);
 		conversationsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		conversationsList.setBounds(25, 128, 275, 529);
@@ -133,31 +130,26 @@ public class PrivateMessageUI extends JFrame {
 		sendMessage.setBounds(1172, 571, 68, 63);
 		sendMessage.addMouseListener(new MouseListener() {
 
-			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
-			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
 
 			}
 
-			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
 
 			}
 
-			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
 
 			}
 
-			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
 				Context context;
@@ -167,7 +159,7 @@ public class PrivateMessageUI extends JFrame {
 						PrivateMessageServicesRemote pr = (PrivateMessageServicesRemote) context.lookup(
 								"valhalla-ear/valhalla-ejb/PrivateMessageServices!tn.esprit.bzbz.valhalla.services.privateMessage.PrivateMessageServicesRemote");
 						pr.sendPrivateMessage(MainMenuUI.connectedUser, secondParty, messagesArea.getText());
-						
+
 					} catch (NamingException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -178,18 +170,18 @@ public class PrivateMessageUI extends JFrame {
 			}
 		});
 		contentPane.add(sendMessage);
-		
+
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setEnabled(false);
 		lblNewLabel.setIcon(new ImageIcon(PrivateMessageUI.class.getResource("/images/aa.png")));
 		lblNewLabel.setBounds(1172, 571, 68, 63);
 		contentPane.add(lblNewLabel);
-		
+
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon(PrivateMessageUI.class.getResource("/images/message.jpg")));
 		label.setBounds(0, 0, 1274, 705);
 		contentPane.add(label);
-		
+
 		JButton btnBack = new JButton("back");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -197,7 +189,7 @@ public class PrivateMessageUI extends JFrame {
 				f.setLocationRelativeTo(null);
 				f.setVisible(true);
 				PrivateMessageUI.this.setVisible(false);
-				
+
 			}
 		});
 		btnBack.setDefaultCapable(false);
@@ -208,7 +200,7 @@ public class PrivateMessageUI extends JFrame {
 		btnBack.setFocusPainted(false);
 		btnBack.setBounds(1109, 11, 55, 50);
 		contentPane.add(btnBack);
-		
+
 		JButton btnHome = new JButton("home");
 		btnHome.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -216,7 +208,7 @@ public class PrivateMessageUI extends JFrame {
 				f.setLocationRelativeTo(null);
 				f.setVisible(true);
 				PrivateMessageUI.this.setVisible(false);
-				
+
 			}
 		});
 		btnHome.setFocusable(false);
@@ -228,7 +220,7 @@ public class PrivateMessageUI extends JFrame {
 		btnHome.setBounds(1190, 11, 55, 50);
 		contentPane.add(btnHome);
 	}
-	
+
 	public void loadMessagesByConversation(User secondParty) {
 
 		StyledDocument doc;
@@ -300,7 +292,6 @@ public class PrivateMessageUI extends JFrame {
 			}
 
 		}
-
 
 	}
 

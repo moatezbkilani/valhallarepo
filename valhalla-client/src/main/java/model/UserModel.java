@@ -33,12 +33,10 @@ public class UserModel extends AbstractTableModel {
 
 	}
 
-	@Override
 	public int getRowCount() {
 		return users.size();
 	}
 
-	@Override
 	public int getColumnCount() {
 		// throw new UnsupportedOperationException("Not supported yet."); //To
 		// change body of generated methods, choose Tools | Templates.
@@ -46,13 +44,11 @@ public class UserModel extends AbstractTableModel {
 		return col.length;
 	}
 
-	@Override
 	public String getColumnName(int column) {
 		return col[column]; // To change body of generated methods, choose Tools
 							// | Templates.
 	}
 
-	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		switch (columnIndex) {
 		case 0:

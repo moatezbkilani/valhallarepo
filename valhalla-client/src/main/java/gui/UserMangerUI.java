@@ -35,6 +35,14 @@ public class UserMangerUI extends JFrame {
 	public static int row;
 	public static int col;
 	public static int iid;
+	JLabel gender;
+	JLabel role;
+	JLabel lastname;
+	JLabel Firstname;
+	JLabel password;
+	JLabel email;
+	JLabel usernme;
+	JLabel sate;
 
 	/**
 	 * Launch the application.
@@ -144,13 +152,13 @@ public class UserMangerUI extends JFrame {
 		lblPromotionDate.setBounds(781, 548, 115, 23);
 		contentPane.add(lblPromotionDate);
 
-		JLabel Firstname = new JLabel("");
+		Firstname = new JLabel("");
 		Firstname.setForeground(Color.WHITE);
 		Firstname.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		Firstname.setBounds(920, 176, 96, 23);
 		contentPane.add(Firstname);
 
-		JLabel lastname = new JLabel("");
+		lastname = new JLabel("");
 		lastname.setForeground(Color.WHITE);
 		lastname.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lastname.setBounds(920, 207, 96, 23);
@@ -162,19 +170,19 @@ public class UserMangerUI extends JFrame {
 		Dateofbith.setBounds(920, 241, 96, 23);
 		contentPane.add(Dateofbith);
 
-		JLabel gender = new JLabel("");
+		gender = new JLabel("");
 		gender.setForeground(Color.WHITE);
 		gender.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		gender.setBounds(920, 276, 96, 23);
 		contentPane.add(gender);
 
-		JLabel email = new JLabel("");
+		email = new JLabel("");
 		email.setForeground(Color.WHITE);
 		email.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		email.setBounds(920, 310, 96, 23);
 		contentPane.add(email);
 
-		JLabel password = new JLabel("");
+		password = new JLabel("");
 		password.setForeground(Color.WHITE);
 		password.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		password.setBounds(920, 344, 96, 23);
@@ -192,19 +200,19 @@ public class UserMangerUI extends JFrame {
 		lastlogin.setBounds(920, 412, 96, 23);
 		contentPane.add(lastlogin);
 
-		JLabel usernme = new JLabel("");
+		usernme = new JLabel("");
 		usernme.setForeground(Color.WHITE);
 		usernme.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		usernme.setBounds(920, 446, 96, 23);
 		contentPane.add(usernme);
 
-		JLabel sate = new JLabel("");
+		sate = new JLabel("");
 		sate.setForeground(Color.WHITE);
 		sate.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		sate.setBounds(920, 480, 96, 23);
 		contentPane.add(sate);
 
-		JLabel role = new JLabel("");
+		role = new JLabel("");
 		role.setForeground(Color.WHITE);
 		role.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		role.setBounds(920, 514, 96, 23);
@@ -232,7 +240,7 @@ public class UserMangerUI extends JFrame {
 					context = new InitialContext();
 					UserServicesRemote UserServicesRemote = (UserServicesRemote) context.lookup(
 							"valhalla-ear/valhalla-ejb/UserServices!tn.esprit.bzbz.valhalla.services.user.UserServicesRemote");
-					User users = UserServicesRemote.findById((int) table.getValueAt(i, 0));
+					User users = UserServicesRemote.findById(Integer.parseInt(table.getValueAt(i, 0).toString()));
 					System.out.println(users.getFirstName());
 
 					Firstname.setText((String) users.getFirstName());
@@ -270,7 +278,6 @@ public class UserMangerUI extends JFrame {
 		btnBanne.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-
 				Context context;
 				int p = JOptionPane.showConfirmDialog(null, "Are you sure to Banne this user ", "banne",
 						JOptionPane.YES_NO_OPTION);
@@ -280,7 +287,8 @@ public class UserMangerUI extends JFrame {
 						context = new InitialContext();
 						UserServicesRemote UserServicesRemote = (UserServicesRemote) context.lookup(
 								"valhalla-ear/valhalla-ejb/UserServices!tn.esprit.bzbz.valhalla.services.user.UserServicesRemote");
-						UserServicesRemote.banUser((int) table.getValueAt(i, 0));;
+						UserServicesRemote.banUser(Integer.parseInt(table.getValueAt(i, 0).toString()));
+						;
 
 						table.setModel(new UserModel());
 						table.setVisible(false);
@@ -293,9 +301,6 @@ public class UserMangerUI extends JFrame {
 					}
 				}
 
-			
-				
-				
 			}
 		});
 		btnBanne.setBounds(1057, 590, 115, 36);
@@ -314,7 +319,7 @@ public class UserMangerUI extends JFrame {
 						context = new InitialContext();
 						UserServicesRemote UserServicesRemote = (UserServicesRemote) context.lookup(
 								"valhalla-ear/valhalla-ejb/UserServices!tn.esprit.bzbz.valhalla.services.user.UserServicesRemote");
-						UserServicesRemote.downgradeModerator((int) table.getValueAt(i, 0));
+						UserServicesRemote.downgradeModerator(Integer.parseInt(table.getValueAt(i, 0).toString()));
 
 						table.setModel(new UserModel());
 						table.setVisible(false);
@@ -345,7 +350,7 @@ public class UserMangerUI extends JFrame {
 						context = new InitialContext();
 						UserServicesRemote UserServicesRemote = (UserServicesRemote) context.lookup(
 								"valhalla-ear/valhalla-ejb/UserServices!tn.esprit.bzbz.valhalla.services.user.UserServicesRemote");
-						UserServicesRemote.upgradeUser((int) table.getValueAt(i, 0));
+						UserServicesRemote.upgradeUser(Integer.parseInt(table.getValueAt(i, 0).toString()));
 						table.setModel(new UserModel());
 						table.setVisible(false);
 						table.setVisible(true);
