@@ -104,11 +104,18 @@ public class ForumMangementUI extends JFrame {
 		JButton btnReprotSubject = new JButton("ServiceBtn");
 		btnReprotSubject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ReportedSubjectsUI f = new ReportedSubjectsUI();
+				ReportedSubjectsUI f;
+				try {
+					f = new ReportedSubjectsUI();
+					f.setLocationRelativeTo(null);
+					f.setVisible(true);
+					ForumMangementUI.this.setVisible(false);
+				} catch (NamingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
-				f.setLocationRelativeTo(null);
-				f.setVisible(true);
-				ForumMangementUI.this.setVisible(false);
+				
 				
 			}
 		});

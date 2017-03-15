@@ -262,7 +262,7 @@ public class UserMangerUI extends JFrame {
 					usernme.setText((String) users.getUsername());
 					sate.setText((String) users.getState());
 					role.setText((String) users.getRole());
-					// promotion.setText(4);
+					promotion.setText(d4);
 
 				} catch (NamingException e1) {
 					// TODO Auto-generated catch block
