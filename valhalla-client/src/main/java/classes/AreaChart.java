@@ -30,6 +30,9 @@ import org.jfree.ui.VerticalAlignment;
 public class AreaChart extends ApplicationFrame {
 
 	private String title;
+	
+	public static JFreeChart areaChart;
+
 	/**
 	 * Creates a new demo application.
 	 *
@@ -89,7 +92,8 @@ public class AreaChart extends ApplicationFrame {
 		chartPanel.setPreferredSize(new Dimension(500, 270));
 		chartPanel.setEnforceFileExtensions(false);
 
-		setContentPane(chartPanel);
+		//setContentPane(chartPanel);
+		areaChart = chart;
 
 	}
 
