@@ -13,7 +13,7 @@ import tn.esprit.bzbz.valhalla.services.reportSubject.ReportSubjectServicesRemot
 public class ReportedSubjectModel extends AbstractTableModel {
 	Set<Subject> res;
 
-	String[] col = { "id", "Name", "Number of report" };
+	String[] col = { "id", "Name", "Number of report", "State" };
 
 	public ReportedSubjectModel() throws NamingException {
 		Context context = new InitialContext();
@@ -69,6 +69,8 @@ public class ReportedSubjectModel extends AbstractTableModel {
 		}
 		case 1:
 			return methode(rowIndex).getSubjectName();
+		case 3:
+			return methode(rowIndex).getState();
 		case 2: {
 			Context context;
 			try {

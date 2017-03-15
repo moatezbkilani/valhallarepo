@@ -204,7 +204,7 @@ public class SectionsUI extends JFrame {
 		Delete.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int p = JOptionPane.showConfirmDialog(null, "Are you sure to Banne this user ", "banne",
+				int p = JOptionPane.showConfirmDialog(null, "Are you sure to delete this section ", "Delete",
 						JOptionPane.YES_NO_OPTION);
 				if (p == 0) {
 					Context context;

@@ -173,6 +173,10 @@ public class ReportedSubjectsUI extends JFrame {
 		}
 
 		tablereport.setModel(new ReportedSubjectModel());
+		tablereport.getColumnModel().getColumn(0).setMinWidth(0);
+		tablereport.getColumnModel().getColumn(0).setMaxWidth(0);
+		tablereport.getColumnModel().getColumn(0).setWidth(0);
+
 		tablereport.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -194,6 +198,9 @@ public class ReportedSubjectsUI extends JFrame {
 				if (comboSection.getSelectedIndex() == 0) {
 					try {
 						tablereport.setModel(new ReportedSubjectModel(s1.getId()));
+						tablereport.getColumnModel().getColumn(0).setMinWidth(0);
+						tablereport.getColumnModel().getColumn(0).setMaxWidth(0);
+						tablereport.getColumnModel().getColumn(0).setWidth(0);
 						tableuser.setVisible(false);
 					} catch (NamingException e1) {
 						// TODO Auto-generated catch block
@@ -216,6 +223,10 @@ public class ReportedSubjectsUI extends JFrame {
 
 								s2 = serviceServicesRemote.findSectionById(s.getId());
 								tablereport.setModel(new ReportedSubjectModel(s2.getId(), 1));
+								tablereport.getColumnModel().getColumn(0).setMinWidth(0);
+								tablereport.getColumnModel().getColumn(0).setMaxWidth(0);
+								tablereport.getColumnModel().getColumn(0).setWidth(0);
+
 								tableuser.setVisible(false);
 							}
 						}
@@ -236,6 +247,10 @@ public class ReportedSubjectsUI extends JFrame {
 				if (comboService.getSelectedIndex() == 0) {
 					try {
 						tablereport.setModel(new ReportedSubjectModel());
+						tablereport.getColumnModel().getColumn(0).setMinWidth(0);
+						tablereport.getColumnModel().getColumn(0).setMaxWidth(0);
+						tablereport.getColumnModel().getColumn(0).setWidth(0);
+
 						tableuser.setVisible(false);
 						comboSection.removeAllItems();
 					} catch (NamingException e1) {
@@ -259,6 +274,10 @@ public class ReportedSubjectsUI extends JFrame {
 
 								s1 = serviceServicesRemote.findServiceById(s.getId());
 								tablereport.setModel(new ReportedSubjectModel(s1.getId()));
+								tablereport.getColumnModel().getColumn(0).setMinWidth(0);
+								tablereport.getColumnModel().getColumn(0).setMaxWidth(0);
+								tablereport.getColumnModel().getColumn(0).setWidth(0);
+
 								tableuser.setVisible(false);
 							}
 						}
@@ -286,18 +305,28 @@ public class ReportedSubjectsUI extends JFrame {
 				if (tablereport.getSelectedRow() == -1) {
 					JOptionPane.showMessageDialog(null, "Please, select a subject");
 				} else {
-					Context context2;
-					try {
-						context2 = new InitialContext();
-						SubjectsServicesRemote serviceServicesRemote = (SubjectsServicesRemote) context2.lookup(
-								"valhalla-ear/valhalla-ejb/SubjectsServices!tn.esprit.bzbz.valhalla.services.subjects.SubjectsServicesRemote");
-						serviceServicesRemote.lockSubject(
-								Integer.parseInt(tablereport.getValueAt(tablereport.getSelectedRow(), 0) + ""));
-					} catch (NamingException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+					int p = JOptionPane.showConfirmDialog(null, "Are you sure to lock this subject ", "Lock",
+							JOptionPane.YES_NO_OPTION);
+					if (p == 0) {
+						Context context2;
+						try {
+							context2 = new InitialContext();
+							SubjectsServicesRemote serviceServicesRemote = (SubjectsServicesRemote) context2.lookup(
+									"valhalla-ear/valhalla-ejb/SubjectsServices!tn.esprit.bzbz.valhalla.services.subjects.SubjectsServicesRemote");
+							serviceServicesRemote.lockSubject(
+									Integer.parseInt(tablereport.getValueAt(tablereport.getSelectedRow(), 0) + ""));
+							tablereport.setModel(new ReportedSubjectModel());
+							tablereport.getColumnModel().getColumn(0).setMinWidth(0);
+							tablereport.getColumnModel().getColumn(0).setMaxWidth(0);
+							tablereport.getColumnModel().getColumn(0).setWidth(0);
+							tableuser.setVisible(false);
+							comboSection.removeAllItems();
+							comboService.setSelectedIndex(0);
+						} catch (NamingException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 					}
-
 				}
 			}
 		});
@@ -308,18 +337,29 @@ public class ReportedSubjectsUI extends JFrame {
 				if (tablereport.getSelectedRow() == -1) {
 					JOptionPane.showMessageDialog(null, "Please, select a subject");
 				} else {
-					Context context2;
-					try {
-						context2 = new InitialContext();
-						SubjectsServicesRemote serviceServicesRemote = (SubjectsServicesRemote) context2.lookup(
-								"valhalla-ear/valhalla-ejb/SubjectsServices!tn.esprit.bzbz.valhalla.services.subjects.SubjectsServicesRemote");
-						serviceServicesRemote.removeSubject(
-								Integer.parseInt(tablereport.getValueAt(tablereport.getSelectedRow(), 0) + ""));
-					} catch (NamingException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					int p = JOptionPane.showConfirmDialog(null, "Are you sure to delete this subject ", "Delete",
+							JOptionPane.YES_NO_OPTION);
+					if (p == 0) {
+						Context context2;
+						try {
+							context2 = new InitialContext();
+							SubjectsServicesRemote serviceServicesRemote = (SubjectsServicesRemote) context2.lookup(
+									"valhalla-ear/valhalla-ejb/SubjectsServices!tn.esprit.bzbz.valhalla.services.subjects.SubjectsServicesRemote");
+							serviceServicesRemote.removeSubject(
+									Integer.parseInt(tablereport.getValueAt(tablereport.getSelectedRow(), 0) + ""));
+							tablereport.setModel(new ReportedSubjectModel());
+							tablereport.getColumnModel().getColumn(0).setMinWidth(0);
+							tablereport.getColumnModel().getColumn(0).setMaxWidth(0);
+							tablereport.getColumnModel().getColumn(0).setWidth(0);
+							tableuser.setVisible(false);
+							comboSection.removeAllItems();
+							comboService.setSelectedIndex(0);
+						} catch (NamingException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 
+					}
 				}
 			}
 		});
