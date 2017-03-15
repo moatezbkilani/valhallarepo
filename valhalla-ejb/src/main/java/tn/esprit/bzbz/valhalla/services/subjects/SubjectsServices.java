@@ -31,26 +31,31 @@ public class SubjectsServices implements SubjectsServicesRemote, SubjectsService
 		return entityManager.createQuery("select rs from ReportSubject rs").getResultList();
 
 	}
-	
-	@Override
-	public Long numberTotalSubjects() {
-		return (Long) entityManager.createQuery("select count(u) from Subject u").getSingleResult();
-	}
-	
-	@Override
-	public Long numberSubject(Service service) {
-		return (Long) entityManager
-				.createQuery("select count(u) from Subject u where u.section.service LIKE :a")
-				.setParameter("a", service).getSingleResult();
-	}
 
 	@Override
 	public List<ReportSubject> findReportedSubjectsInSection(Section section) {
 		return entityManager.createQuery("select rs from ReportSubject rs where rs.subject.section LIKE :se")
 				.setParameter("se", section).getResultList();
 	}
+
 	@Override
 	public void saveOrUpdateSubject(Subject subject) {
+		entityManager.merge(subject);
+
+	}
+
+	@Override
+	public void lockSubject(Integer id) {
+		Subject subject = findSubjectById(id);
+		subject.setState("Locked");
+		entityManager.merge(subject);
+
+	}
+
+	@Override
+	public void removeSubject(Integer id) {
+		Subject subject = findSubjectById(id);
+		subject.setState("Removed");
 		entityManager.merge(subject);
 
 	}
@@ -60,10 +65,21 @@ public class SubjectsServices implements SubjectsServicesRemote, SubjectsService
 		return entityManager.find(Subject.class, i);
 	}
 
-	
 	@Override
 	public Long getNumberSubject() {
 		return (Long) entityManager.createQuery("select count(c) from Subject c").getSingleResult();
+	}
+
+	@Override
+	public Long numberSubject(Service service) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Long numberTotalSubjects() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

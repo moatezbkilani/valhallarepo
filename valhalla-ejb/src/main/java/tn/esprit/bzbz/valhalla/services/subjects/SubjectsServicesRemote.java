@@ -23,4 +23,8 @@ public interface SubjectsServicesRemote {
 	Long numberSubject(Service service);
 
 	Long numberTotalSubjects();
+
+	void removeSubject(Integer id);
+
+	void lockSubject(Integer id);
 }

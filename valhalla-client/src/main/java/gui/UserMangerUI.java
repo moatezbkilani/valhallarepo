@@ -35,14 +35,17 @@ public class UserMangerUI extends JFrame {
 	public static int row;
 	public static int col;
 	public static int iid;
+	JLabel Registrationdate;
 	JLabel gender;
 	JLabel role;
 	JLabel lastname;
 	JLabel Firstname;
 	JLabel password;
+	JLabel Dateofbith;
 	JLabel email;
 	JLabel usernme;
 	JLabel sate;
+	JLabel lastlogin;
 
 	/**
 	 * Launch the application.
@@ -164,7 +167,7 @@ public class UserMangerUI extends JFrame {
 		lastname.setBounds(920, 207, 96, 23);
 		contentPane.add(lastname);
 
-		JLabel Dateofbith = new JLabel("");
+		Dateofbith = new JLabel("");
 		Dateofbith.setForeground(Color.WHITE);
 		Dateofbith.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		Dateofbith.setBounds(920, 241, 96, 23);
@@ -188,13 +191,13 @@ public class UserMangerUI extends JFrame {
 		password.setBounds(920, 344, 96, 23);
 		contentPane.add(password);
 
-		JLabel Registrationdate = new JLabel("");
+		Registrationdate = new JLabel("");
 		Registrationdate.setForeground(Color.WHITE);
 		Registrationdate.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		Registrationdate.setBounds(920, 378, 115, 23);
 		contentPane.add(Registrationdate);
 
-		JLabel lastlogin = new JLabel("");
+		lastlogin = new JLabel("");
 		lastlogin.setForeground(Color.WHITE);
 		lastlogin.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lastlogin.setBounds(920, 412, 96, 23);
@@ -242,13 +245,12 @@ public class UserMangerUI extends JFrame {
 							"valhalla-ear/valhalla-ejb/UserServices!tn.esprit.bzbz.valhalla.services.user.UserServicesRemote");
 					User users = UserServicesRemote.findById(Integer.parseInt(table.getValueAt(i, 0).toString()));
 					System.out.println(users.getFirstName());
-					
-					
+
 					String d1 = df.format(users.getBirthDate());
 					String d2 = df.format(users.getRegistrationDate());
 					String d3 = df.format(users.getLastLogin());
 					String d4 = df.format(users.getPromotionDate());
-					
+
 					Firstname.setText((String) users.getFirstName());
 					lastname.setText((String) users.getLastName());
 					Dateofbith.setText(d1);
@@ -260,9 +262,8 @@ public class UserMangerUI extends JFrame {
 					usernme.setText((String) users.getUsername());
 					sate.setText((String) users.getState());
 					role.setText((String) users.getRole());
-					//promotion.setText(4);
+					// promotion.setText(4);
 
-					
 				} catch (NamingException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
