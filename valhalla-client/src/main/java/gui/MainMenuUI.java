@@ -1,9 +1,8 @@
 package gui;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.Label;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -15,13 +14,11 @@ import javax.naming.NamingException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import org.jfree.chart.ChartPanel;
-import org.jfree.ui.RefineryUtilities;
 
 import classes.AreaChart;
 import classes.PieChart3D;
@@ -31,15 +28,13 @@ import tn.esprit.bzbz.valhalla.entity.User;
 import tn.esprit.bzbz.valhalla.services.comments.CommentsServicesRemote;
 import tn.esprit.bzbz.valhalla.services.service.ServiceServicesRemote;
 import tn.esprit.bzbz.valhalla.services.subjects.SubjectsServicesRemote;
-import javax.swing.JDesktopPane;
-import java.awt.FlowLayout;
 
 public class MainMenuUI extends JFrame {
 
 	public static User connectedUser;
 
 	private JPanel contentPane;
-	
+
 	private JPanel statsPanel;
 
 	/**
@@ -75,15 +70,10 @@ public class MainMenuUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		statsPanel = new JPanel();
 		statsPanel.setBounds(325, 112, 939, 568);
 		contentPane.add(statsPanel);
-		
-		
-		
-		
-		
 
 		JLabel BG = new JLabel("");
 		BG.setIcon(new ImageIcon(MainMenuUI.class.getResource("/images/Main.jpg")));
@@ -170,21 +160,27 @@ public class MainMenuUI extends JFrame {
 			// setContentPane(demo.createDemoPanel(results));
 
 			final PieChart3D demox = new PieChart3D("Comments per Services", results);
-			/*demox.pack();
-			RefineryUtilities.centerFrameOnScreen(demox);
-			demox.setVisible(true);
-			demox.setAlwaysOnTop(true);
-*/
-			ChartPanel dPanel = new ChartPanel(demox.commentsChart("Comments per Services", results)); //creating the chart panel, which extends JPanel
+			/*
+			 * demox.pack(); RefineryUtilities.centerFrameOnScreen(demox);
+			 * demox.setVisible(true); demox.setAlwaysOnTop(true);
+			 */
+			ChartPanel dPanel = new ChartPanel(demox.commentsChart("Comments per Services", results)); // creating
+																										// the
+																										// chart
+																										// panel,
+																										// which
+																										// extends
+																										// JPanel
 			FlowLayout flowLayout3 = (FlowLayout) dPanel.getLayout();
 			flowLayout3.setAlignment(FlowLayout.LEFT);
 			dPanel.setMaximumDrawWidth(500);
 			dPanel.setMaximumDrawHeight(400);
-			dPanel.setPreferredSize(new Dimension(440, 300)); //size according to my window
+			dPanel.setPreferredSize(new Dimension(440, 300)); // size according
+																// to my window
 			dPanel.setMouseWheelEnabled(true);
-			
+
 			statsPanel.add(dPanel);
-			
+
 			SubjectsServicesRemote sub = (SubjectsServicesRemote) context.lookup(
 					"valhalla-ear/valhalla-ejb/SubjectsServices!tn.esprit.bzbz.valhalla.services.subjects.SubjectsServicesRemote");
 
@@ -193,11 +189,14 @@ public class MainMenuUI extends JFrame {
 
 			List<Results> results1 = new ArrayList<Results>();
 			for (Service ser : ssr.findServices()) {
+				Double r = 0d;
 				Results res = new Results();
 				res.setStat1(ser.getServiceName());
-				Double r = (sub.numberSubject(ssr.findServiceById(ser.getId())).doubleValue()
+				System.out.println("ICIIIIIII " + sub.numberSubject(ssr.findServiceById(ser.getId())));
+				r = (sub.numberSubject(ssr.findServiceById(ser.getId())).doubleValue()
 						/ sub.numberTotalSubjects().doubleValue());
 				System.out.println(r);
+
 				res.setStat2(r);
 
 				results1.add(res);
@@ -207,34 +206,45 @@ public class MainMenuUI extends JFrame {
 			List<Long> l = sisr.getNumberCommentsPerMonthFrom3YearsAgor();
 
 			final AreaChart demo2 = new AreaChart("Comments per months for 3 years ago", l);
-			
-			ChartPanel areaPanel = new ChartPanel(AreaChart.areaChart); //creating the chart panel, which extends JPanel
+
+			ChartPanel areaPanel = new ChartPanel(AreaChart.areaChart); // creating
+																		// the
+																		// chart
+																		// panel,
+																		// which
+																		// extends
+																		// JPanel
 			FlowLayout borderLayout = (FlowLayout) areaPanel.getLayout();
 			borderLayout.setAlignment(FlowLayout.CENTER);
 			areaPanel.setMaximumDrawWidth(900);
 			areaPanel.setMaximumDrawHeight(400);
-			areaPanel.setPreferredSize(new Dimension(900, 300)); //size according to my window
+			areaPanel.setPreferredSize(new Dimension(900, 300)); // size
+																	// according
+																	// to my
+																	// window
 			areaPanel.setMouseWheelEnabled(true);
-			
-			
-			
+
 			final PieChart3D dem = new PieChart3D("Subjects per Services", results1);
-			
-			
-			ChartPanel chPanel = new ChartPanel(dem.subjectsChart("Subjects per Services", results1)); //creating the chart panel, which extends JPanel
+
+			ChartPanel chPanel = new ChartPanel(dem.subjectsChart("Subjects per Services", results1)); // creating
+																										// the
+																										// chart
+																										// panel,
+																										// which
+																										// extends
+																										// JPanel
 			FlowLayout flowLayout = (FlowLayout) chPanel.getLayout();
 			flowLayout.setAlignment(FlowLayout.LEFT);
 			chPanel.setMaximumDrawWidth(500);
 			chPanel.setMaximumDrawHeight(400);
-			chPanel.setPreferredSize(new Dimension(440, 300)); //size according to my window
+			chPanel.setPreferredSize(new Dimension(440, 300)); // size according
+																// to my window
 			chPanel.setMouseWheelEnabled(true);
-			
+
 			statsPanel.add(chPanel);
-			
-			
+
 			statsPanel.add(areaPanel);
 
-			
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

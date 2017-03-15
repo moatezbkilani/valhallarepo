@@ -30,6 +30,8 @@ public class LoginUI extends JFrame {
 	private JPanel contentPane;
 	private JTextField email;
 	private JPasswordField password;
+	MainMenuUI n;
+	static LoginUI frame;
 
 	/**
 	 * Launch the application.
@@ -38,7 +40,7 @@ public class LoginUI extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LoginUI frame = new LoginUI();
+					frame = new LoginUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -60,7 +62,7 @@ public class LoginUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		MainMenuUI n = new MainMenuUI(MainMenuUI.connectedUser);
+		n = new MainMenuUI(MainMenuUI.connectedUser);
 
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {

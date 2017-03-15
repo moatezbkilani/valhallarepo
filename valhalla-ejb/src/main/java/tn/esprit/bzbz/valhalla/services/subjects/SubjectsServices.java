@@ -72,14 +72,13 @@ public class SubjectsServices implements SubjectsServicesRemote, SubjectsService
 
 	@Override
 	public Long numberSubject(Service service) {
-		// TODO Auto-generated method stub
-		return null;
+		return (Long) entityManager.createQuery("select count(c) from Subject c where c.section.service LIKE :p")
+				.setParameter("p", service).getSingleResult();
 	}
 
 	@Override
 	public Long numberTotalSubjects() {
-		// TODO Auto-generated method stub
-		return null;
+		return (Long) entityManager.createQuery("select count(c) from Subject c").getSingleResult();
 	}
 
 }
