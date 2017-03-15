@@ -7,14 +7,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.imageio.ImageIO;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -242,14 +247,18 @@ public class PrivateMessageUI extends JFrame {
 		StyleConstants.setForeground(messageContent, Color.decode("#767676"));
 		// StyleConstants.setBackground(senderColor, Color.LIGHT_GRAY);
 		StyleConstants.setBold(messageContent, false);
-		StyleConstants.setFontSize(messageContent, 14);
-		// StyleConstants.setIcon(messageContent, c);
+		StyleConstants.setFontSize(messageContent, 16);
+		
+		//StyleConstants.setBackground(messageContent, Color.cyan);
 
 		SimpleAttributeSet senderColor = new SimpleAttributeSet();
 		StyleConstants.setForeground(senderColor, Color.decode("#0000FF"));
 		// StyleConstants.setBackground(senderColor, Color.LIGHT_GRAY);
 		StyleConstants.setBold(senderColor, true);
 		StyleConstants.setFontSize(senderColor, 15);
+		
+		String absolutePath = "C:/Users/Lowkeyz/Desktop/";
+		
 
 		SimpleAttributeSet receiverColor = new SimpleAttributeSet();
 		StyleConstants.setForeground(receiverColor, Color.decode("#FF0000"));
@@ -274,20 +283,41 @@ public class PrivateMessageUI extends JFrame {
 				doc = messagesContainer.getStyledDocument();
 				try {
 					if (MainMenuUI.connectedUser.getId() == sender.getId()) {
+						BufferedImage image = null;
+						try {
+							image = ImageIO.read(new File(absolutePath+""+MainMenuUI.connectedUser.getImage()));
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						BufferedImage ret = new BufferedImage(32,32,BufferedImage.TYPE_INT_RGB);
+						ret.getGraphics().drawImage(image,0,0,32,32,null);
+						StyleConstants.setIcon(senderColor, new ImageIcon(ret));
 						doc.insertString(doc.getLength(), print, senderColor);
-						doc.insertString(doc.getLength(), message.getContent() + " \n", messageContent);
-						doc.insertString(doc.getLength(), "                                                         "
+						doc.insertString(doc.getLength(), "  "+message.getContent() + " \n", messageContent);
+						doc.insertString(doc.getLength(), "              "
 								+ message.getMessageId().getDate() + " \n", timeDesign);
+						doc.insertString(doc.getLength(),"\n",null);
 					} else {
+						BufferedImage image = null;
+						try {
+							image = ImageIO.read(new File(absolutePath+""+sender.getImage()));
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						BufferedImage ret = new BufferedImage(32,32,BufferedImage.TYPE_INT_RGB);
+						ret.getGraphics().drawImage(image,0,0,32,32,null);
+						StyleConstants.setIcon(receiverColor, new ImageIcon(ret));
 						doc.insertString(doc.getLength(), print, receiverColor);
-						doc.insertString(doc.getLength(), message.getContent() + " \n", messageContent);
-						doc.insertString(doc.getLength(), "                                                         "
+						doc.insertString(doc.getLength(), "  "+message.getContent() + " \n", messageContent);
+						doc.insertString(doc.getLength(), "              "
 								+ message.getMessageId().getDate() + " \n", timeDesign);
-
+						doc.insertString(doc.getLength(),"\n",null);
 					}
 				} catch (BadLocationException ex) {
-					// Logger.getLogger(Messages.class.getName()).log(Level.SEVERE,
-					// null, ex);
+					
 				}
 			}
 

@@ -26,7 +26,7 @@ public class PrivateMessageTest {
 		User usr3 = usr.findById(3);
 
 		// pr.sendPrivateMessage(usr1, usr2, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-		// pr.sendPrivateMessage(usr1, usr2, "BBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+		 pr.sendPrivateMessage(usr2, usr1, "BBBBBBBBBBBBBBBBBBBBBBBBBBBB");
 
 		// pr.sendPrivateMessage(usr3, usr1, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 		pr.sendPrivateMessage(usr2, usr3, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
