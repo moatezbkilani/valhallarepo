@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import tn.esprit.bzbz.valhalla.entity.Comment;
+import tn.esprit.bzbz.valhalla.entity.Message;
 import tn.esprit.bzbz.valhalla.entity.ReportSubject;
 import tn.esprit.bzbz.valhalla.entity.Section;
 import tn.esprit.bzbz.valhalla.entity.Service;
@@ -31,20 +32,38 @@ public class UserUtils {
 		// user.setId(1);
 		user.setUsername("MBK1");
 		user.setPassword("mbk");
+		user.setFirstName("Moatez");
+		user.setLastName("Ben Kilani");
 		user.setEmail("moatez.benkilani@esprit.tn");
+		user.setImage("moatez.jpg");
 		entityManager.persist(user);
 		User user2 = new User();
 		// user2.setId(2);
-		user2.setUsername("MBK2");
-		user2.setPassword("mbk");
-		user2.setEmail("moatezbkilani@gmail.com");
+		user2.setUsername("wala");
+		user2.setPassword("zargouni");
+		user2.setFirstName("Wala");
+		user2.setLastName("Zargouni");
+		user2.setImage("wala.jpg");
+		user2.setEmail("wala.zargouni@esprit.tn");
 		entityManager.persist(user2);
 		User user3 = new User();
 		// user2.setId(2);
-		user3.setUsername("MBK3");
-		user3.setPassword("mbk");
-		user3.setEmail("moatez.ben.kilani@gmail.com");
+		user3.setUsername("riadh");
+		user3.setPassword("mrz");
+		user3.setFirstName("Riadh");
+		user3.setLastName("Zrig");
+		user3.setEmail("mohamedriadh.zrig@esprit.tn");
+		user3.setImage("riadh.jpg");
 		entityManager.persist(user3);
+		User user4 = new User();
+		// user2.setId(2);
+		user4.setUsername("raouf");
+		user4.setPassword("raouf");
+		user4.setFirstName("Raouf");
+		user4.setLastName("Ben Fadhel");
+		user4.setEmail("raouf.benfadhel@esprit.tn");
+		user4.setImage("raouf.jpg");
+		entityManager.persist(user4);
 		Service service1 = new Service();
 		Service service2 = new Service();
 		Service service3 = new Service();
@@ -54,7 +73,7 @@ public class UserUtils {
 		service2.setServiceName("Cinema");
 		service3.setDescription("Gaming");
 		service3.setServiceName("Gaming");
-
+		
 		entityManager.persist(service1);
 		entityManager.persist(service2);
 		entityManager.persist(service3);
@@ -129,5 +148,19 @@ public class UserUtils {
 
 		Comment comment5 = new Comment("AAAAAhhh", user, subject5);
 		entityManager.persist(comment5);
+		
+		Message message2 = new Message("Ahla", user2, user);
+		Message message = new Message("Salut", user, user2);
+		Message message4 = new Message("ysalmek", user3, user2);
+		Message message3 = new Message("Asslema", user2, user3);
+		Message message6 = new Message("Hellooo !!", user4, user2);
+		Message message5 = new Message("Roufaaaa !", user2, user4);
+		
+		entityManager.persist(message);
+		entityManager.persist(message2);
+		entityManager.persist(message3);
+		entityManager.persist(message4);
+		entityManager.persist(message5);
+		entityManager.persist(message6);
 	}
 }

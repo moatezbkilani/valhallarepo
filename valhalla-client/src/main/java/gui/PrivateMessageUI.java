@@ -102,7 +102,7 @@ public class PrivateMessageUI extends JFrame {
 		conversationsList = new JList();
 		conversationsList.setSelectionBackground(Color.LIGHT_GRAY);
 		conversationsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		conversationsList.setBounds(25, 128, 275, 529);
+		conversationsList.setBounds(25, 128, 275, 495);
 		conversationsList.setModel(listModel);
 		conversationsList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent evt) {
@@ -124,6 +124,16 @@ public class PrivateMessageUI extends JFrame {
 		messagesContainer.setEditable(false);
 		messagesContainer.setBounds(381, 101, 859, 388);
 		contentPane.add(messagesContainer);
+		
+		JButton btnDelete = new JButton("Delete");
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				/////////////////////////////////////
+				deleteConversation(MainMenuUI.connectedUser,secondParty);
+			}
+		});
+		btnDelete.setBounds(118, 634, 89, 23);
+		contentPane.add(btnDelete);
 
 		messagesArea = new JTextArea();
 		messagesArea.setBounds(381, 535, 781, 145);
@@ -324,5 +334,18 @@ public class PrivateMessageUI extends JFrame {
 		}
 
 	}
-
+	
+	public void deleteConversation(User userOne,User userTwo){
+		Context context1;
+		try {
+			context1 = new InitialContext();
+			PrivateMessageServicesRemote pr = (PrivateMessageServicesRemote) context1.lookup(
+					"valhalla-ear/valhalla-ejb/PrivateMessageServices!tn.esprit.bzbz.valhalla.services.privateMessage.PrivateMessageServicesRemote");
+			pr.deleteConversation(userOne, userTwo);
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 }
